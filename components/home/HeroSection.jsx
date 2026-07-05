@@ -13,7 +13,7 @@ export default function HeroSection() {
   const router = useRouter();
 
   return (
-    <section className="h-screen p-4 md:p-6">
+    <section className="h-dvh p-4 md:p-6">
       <div className="relative h-full rounded-2xl md:rounded-[2rem] overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-br from-[#1a0f0a] via-[#0d0d0d] to-[#08080f]" />
 

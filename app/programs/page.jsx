@@ -105,8 +105,7 @@ function EmblaCarousel({ items }) {
             return (
               <div
                 key={item.id}
-                className="relative shrink-0 grow-0 min-w-0 px-3"
-                style={{ flex: '0 0 40%' }}
+                className="relative shrink-0 grow-0 min-w-0 px-3 flex-[0_0_100%] md:flex-[0_0_50%] lg:flex-[0_0_40%]"
               >
                 <motion.div
                   className="glass-card rounded-2xl p-6 flex flex-col gap-3 cursor-pointer select-none"
@@ -174,7 +173,7 @@ function EmblaCarousel({ items }) {
 
       <button
         onClick={scrollPrev}
-        className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 w-10 h-10 rounded-full flex items-center justify-center z-10"
+        className="hidden sm:flex absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 w-10 h-10 rounded-full items-center justify-center z-10"
         style={{
           background: 'rgba(255,255,255,0.06)',
           border: '1px solid rgba(255,255,255,0.12)',
@@ -185,7 +184,7 @@ function EmblaCarousel({ items }) {
       </button>
       <button
         onClick={scrollNext}
-        className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 w-10 h-10 rounded-full flex items-center justify-center z-10"
+        className="hidden sm:flex absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 w-10 h-10 rounded-full items-center justify-center z-10"
         style={{
           background: 'rgba(255,255,255,0.06)',
           border: '1px solid rgba(255,255,255,0.12)',

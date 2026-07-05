@@ -59,10 +59,9 @@ export default function StatsBar() {
           return (
             <motion.div
               key={stat.label}
-              className="p-6 lg:p-8 text-center"
+              className="p-6 lg:p-8 text-center lg:border-r border-white/5 last:lg:border-r-0"
               style={{
-                borderRight: i < stats.length - 1 ? '1px solid rgba(255,255,255,0.06)' : 'none',
-                borderBottom: '1px solid rgba(255,255,255,0.06)',
+                borderBottom: i < stats.length - 1 ? '1px solid rgba(255,255,255,0.06)' : 'none',
               }}
               initial={{ opacity: 0, y: 15 }}
               whileInView={{ opacity: 1, y: 0 }}

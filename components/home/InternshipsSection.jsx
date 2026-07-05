@@ -87,7 +87,7 @@ export default function InternshipsSection() {
                 <span className="text-xs hidden sm:block" style={{ color: 'rgba(225,224,204,0.35)' }}>
                   {program.duration}
                 </span>
-                <span className="text-xs hidden md:block" style={{ color: 'rgba(225,224,204,0.35)' }}>
+                <span className="text-xs hidden sm:block" style={{ color: 'rgba(225,224,204,0.35)' }}>
                   {program.type}
                 </span>
                 <motion.span
