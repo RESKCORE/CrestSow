@@ -2,7 +2,6 @@
 
 import { motion } from 'framer-motion';
 import { GraduationCap, Cpu, Code, Microchip, Briefcase, Users, Lightbulb, Compass } from 'lucide-react';
-import { SpotlightCard } from '@/components/ui/spotlight-card';
 
 const cardData = [
   {
@@ -112,15 +111,29 @@ export default function CoursesSection() {
           {cardData.map((card, index) => {
             const Icon = card.icon;
             return (
-              <SpotlightCard
+              <motion.div
                 key={card.title}
-                className={`p-6 sm:p-8 ${card.className}`}
-                glowColor={card.glowColor}
+                className={`group relative overflow-hidden rounded-[24px] p-6 sm:p-8 ${card.className}`}
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: '-50px' }}
                 transition={{ duration: 0.5, delay: index * 0.1 }}
+                style={{
+                  background: 'rgba(18,18,18,0.18)',
+                  backdropFilter: 'blur(28px) saturate(180%)',
+                  WebkitBackdropFilter: 'blur(28px) saturate(180%)',
+                  border: '1px solid rgba(255,255,255,0.08)',
+                  boxShadow: '0 12px 40px rgba(0,0,0,0.18)',
+                }}
+                whileHover={{ scale: 1.015, y: -6 }}
               >
+                <div
+                  className="pointer-events-none absolute inset-0 opacity-[0.35] z-0"
+                  style={{
+                    background: `radial-gradient(120% 120% at 50% 0%, ${card.glowColor}, transparent 70%)`,
+                  }}
+                />
+                <div className="relative z-10 h-full flex flex-col">
                 <div className="flex items-center gap-4 mb-5">
                   <div className="w-12 h-12 rounded-2xl flex items-center justify-center shrink-0" style={{ background: 'rgba(255,255,255,0.04)' }}>
                     <Icon size={22} style={{ color: '#DEDBC8' }} />
@@ -148,7 +161,8 @@ export default function CoursesSection() {
                     </span>
                   ))}
                 </div>
-              </SpotlightCard>
+              </div>
+              </motion.div>
             );
           })}
         </div>
