@@ -77,12 +77,7 @@ export default function ContactSection() {
                   onChange={(e) => setEmail(e.target.value)}
                   onKeyDown={(e) => e.key === 'Enter' && handleSubmit()}
                   placeholder="your@email.com"
-                  className="w-full rounded-full px-5 py-3 text-sm outline-none transition-all"
-                  style={{
-                    background: 'rgba(255,255,255,0.06)',
-                    border: '1px solid rgba(255,255,255,0.12)',
-                    color: '#fff',
-                  }}
+                  className="w-full rounded-full px-5 py-3 text-sm outline-none transition-all glass-input"
                 />
                 <CreepyButton onClick={handleSubmit} className="w-full" simple>
                   <span>Get Started</span>

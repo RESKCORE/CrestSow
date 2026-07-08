@@ -69,7 +69,9 @@ export const CreepyButton = ({
 
     if (simple) {
         const simpleBaseClass = cn(
-            "rounded-xl bg-white text-black font-bold tracking-wider cursor-pointer outline-none select-none inline-flex items-center justify-center gap-2",
+            "rounded-xl text-black font-bold tracking-wider cursor-pointer outline-none select-none inline-flex items-center justify-center gap-2",
+            "bg-white/80 backdrop-blur-[28px]",
+            "hover:bg-white/90",
             coverPadding,
             textClass,
             minWidth,
@@ -168,7 +170,8 @@ export const CreepyButton = ({
     );
 
     const baseClass = cn(
-        "relative rounded-xl bg-black cursor-pointer outline-none select-none group tap-highlight-transparent",
+        "relative rounded-xl cursor-pointer outline-none select-none group tap-highlight-transparent",
+        "bg-black/20 backdrop-blur-[28px]",
         "focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-blue-400",
         className
     );

@@ -22,14 +22,22 @@ export default function AdminLoginPage() {
         <div
           className="rounded-2xl p-8 md:p-10"
           style={{
-            background: '#101010',
-            border: '1px solid rgba(255,255,255,0.06)',
+            background: 'rgba(18,18,18,0.18)',
+            backdropFilter: 'blur(28px) saturate(180%)',
+            WebkitBackdropFilter: 'blur(28px) saturate(180%)',
+            border: '1px solid rgba(255,255,255,0.08)',
+            boxShadow: '0 12px 40px rgba(0,0,0,0.18)',
           }}
         >
           <div className="text-center mb-8">
             <div
               className="w-12 h-12 rounded-xl flex items-center justify-center mx-auto mb-4"
-              style={{ background: '#212121' }}
+              style={{
+                background: 'rgba(18,18,18,0.18)',
+                backdropFilter: 'blur(28px) saturate(180%)',
+                WebkitBackdropFilter: 'blur(28px) saturate(180%)',
+                border: '1px solid rgba(255,255,255,0.08)',
+              }}
             >
               <Shield size={20} style={{ color: 'rgba(222,219,200,0.5)' }} />
             </div>
@@ -54,37 +62,39 @@ export default function AdminLoginPage() {
               <input
                 type="email"
                 placeholder="admin@crestsow.com"
-                className="w-full rounded-xl px-4 py-3 text-sm outline-none transition-all"
-                style={{
-                  background: '#212121',
-                  border: '1px solid rgba(255,255,255,0.06)',
-                  color: '#E1E0CC',
-                }}
+                  className="w-full rounded-xl px-4 py-3 text-sm outline-none transition-all glass-input"
+                />
+              </div>
+
+              <div>
+                <label
+                  className="block text-xs mb-1.5"
+                  style={{ color: 'rgba(225,224,204,0.45)' }}
+                >
+                  Password
+                </label>
+                <input
+                  type="password"
+                  placeholder="••••••••"
+                  className="w-full rounded-xl px-4 py-3 text-sm outline-none transition-all glass-input"
               />
             </div>
 
-            <div>
-              <label
-                className="block text-xs mb-1.5"
-                style={{ color: 'rgba(225,224,204,0.45)' }}
-              >
-                Password
-              </label>
-              <input
-                type="password"
-                placeholder="••••••••"
-                className="w-full rounded-xl px-4 py-3 text-sm outline-none transition-all"
-                style={{
-                  background: '#212121',
-                  border: '1px solid rgba(255,255,255,0.06)',
-                  color: '#E1E0CC',
-                }}
-              />
-            </div>
-
-            <button className="group w-full inline-flex items-center justify-between bg-[#DEDBC8] rounded-full pl-5 pr-1.5 py-1.5 mt-2 transition-all duration-300">
+            <button className="group w-full inline-flex items-center justify-between rounded-full pl-5 pr-1.5 py-1.5 mt-2 transition-all duration-300"
+              style={{
+                background: 'rgba(255,255,255,0.82)',
+                backdropFilter: 'blur(28px) saturate(180%)',
+                WebkitBackdropFilter: 'blur(28px) saturate(180%)',
+              }}
+            >
               <span className="text-black font-medium text-sm">Sign In</span>
-              <span className="bg-black rounded-full w-9 h-9 flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform duration-300">
+              <span className="rounded-full w-9 h-9 flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform duration-300"
+                style={{
+                  background: 'rgba(0,0,0,0.4)',
+                  backdropFilter: 'blur(28px) saturate(180%)',
+                  WebkitBackdropFilter: 'blur(28px) saturate(180%)',
+                }}
+              >
                 <ArrowRight size={14} style={{ color: '#E1E0CC' }} />
               </span>
             </button>

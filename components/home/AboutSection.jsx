@@ -5,22 +5,10 @@ import AnimatedCharText from '@/components/shared/AnimatedCharText';
 import { WordsPullUpMultiStyle } from '@/components/shared/WordsPullUp';
 import { companyProfile } from '@/lib/data/company';
 
-const AMBIENT_VIDEO =
-  'https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260405_170732_8a9ccda6-5cff-4628-b164-059c500a2b41.mp4';
 
 export default function AboutSection() {
   return (
-    <section className="video-section bg-black py-24 md:py-36 px-4" id="about">
-      {/* Ambient video background */}
-      <video
-        className="section-bg"
-        src={AMBIENT_VIDEO}
-        autoPlay
-        loop
-        muted
-        playsInline
-      />
-      <div className="section-overlay" />
+    <div className="py-24 md:py-36 px-4" id="about">
 
       <div className="relative z-10 max-w-6xl mx-auto">
         <div className="glass-card rounded-3xl p-8 md:p-14 lg:p-20 text-center">
@@ -88,6 +76,6 @@ export default function AboutSection() {
           </div>
         </div>
       </div>
-    </section>
+    </div>
   );
 }

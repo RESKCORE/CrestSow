@@ -40,12 +40,6 @@ export default function ContactPage() {
     if (Object.keys(errs).length === 0) setSubmitted(true);
   }
 
-  const inputStyle = {
-    background: 'rgba(255,255,255,0.04)',
-    border: '1px solid rgba(255,255,255,0.08)',
-    color: '#E1E0CC',
-  };
-
   return (
     <>
       <div className="fixed inset-0 z-0 pointer-events-none">
@@ -185,10 +179,7 @@ export default function ContactPage() {
                           type={type}
                           value={formData[field]}
                           onChange={(e) => setFormData({ ...formData, [field]: e.target.value })}
-                          className="w-full rounded-xl px-4 py-3 text-sm outline-none transition-all"
-                          style={inputStyle}
-                          onFocus={(e) => e.target.style.borderColor = 'rgba(255,255,255,0.2)'}
-                          onBlur={(e) => e.target.style.borderColor = 'rgba(255,255,255,0.08)'}
+                          className="w-full rounded-xl px-4 py-3 text-sm outline-none transition-all glass-input"
                         />
                         {errors[field] && (
                           <p className="text-xs mt-1.5" style={{ color: 'rgba(239,68,68,0.7)' }}>{errors[field]}</p>
@@ -205,10 +196,7 @@ export default function ContactPage() {
                       type="text"
                       value={formData.subject}
                       onChange={(e) => setFormData({ ...formData, subject: e.target.value })}
-                      className="w-full rounded-xl px-4 py-3 text-sm outline-none transition-all"
-                      style={inputStyle}
-                      onFocus={(e) => e.target.style.borderColor = 'rgba(255,255,255,0.2)'}
-                      onBlur={(e) => e.target.style.borderColor = 'rgba(255,255,255,0.08)'}
+                      className="w-full rounded-xl px-4 py-3 text-sm outline-none transition-all glass-input"
                     />
                     {errors.subject && (
                       <p className="text-xs mt-1.5" style={{ color: 'rgba(239,68,68,0.7)' }}>{errors.subject}</p>
@@ -223,10 +211,7 @@ export default function ContactPage() {
                       rows={5}
                       value={formData.message}
                       onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                      className="w-full rounded-xl px-4 py-3 text-sm outline-none resize-none transition-all"
-                      style={inputStyle}
-                      onFocus={(e) => e.target.style.borderColor = 'rgba(255,255,255,0.2)'}
-                      onBlur={(e) => e.target.style.borderColor = 'rgba(255,255,255,0.08)'}
+                      className="w-full rounded-xl px-4 py-3 text-sm outline-none resize-none transition-all glass-input"
                     />
                     {errors.message && (
                       <p className="text-xs mt-1.5" style={{ color: 'rgba(239,68,68,0.7)' }}>{errors.message}</p>

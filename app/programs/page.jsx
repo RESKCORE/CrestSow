@@ -15,14 +15,10 @@ import {
   ChevronLeft,
   ChevronRight,
 } from 'lucide-react';
-import FadingVideo from '@/components/shared/FadingVideo';
 import { companyProfile } from '@/lib/data/company';
 import { internships } from '@/lib/data/internships';
 import useEmblaCarousel from 'embla-carousel-react';
 import Autoplay from 'embla-carousel-autoplay';
-
-const PAGE_VIDEO =
-  'https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260406_133058_0504132a-0cf3-4450-a370-8ea3b05c95d4.mp4';
 
 const featureCards = [
   {
@@ -215,11 +211,6 @@ function EmblaCarousel({ items }) {
 export default function ProgramsPage() {
   return (
     <>
-      <div className="fixed inset-0 z-0 pointer-events-none">
-        <FadingVideo src={PAGE_VIDEO} className="!fixed" />
-        <div className="absolute inset-0 bg-gradient-to-b from-black/80 via-black/50 to-black/90 z-[1]" />
-      </div>
-
       <div className="relative z-10">
         {/* ── Hero ── */}
         <section className="relative min-h-[60vh] pt-36 pb-28 px-4 overflow-hidden">

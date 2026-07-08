@@ -1,115 +1,158 @@
 'use client';
 
-import { motion, useInView } from 'framer-motion';
-import { useRef } from 'react';
-import { FeatCard } from '@/components/ui/agent-bento-grid';
-import { companyProfile } from '@/lib/data/company';
-
-const FEATURE_VIDEO =
-  'https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260406_133058_0504132a-0cf3-4450-a370-8ea3b05c95d4.mp4';
+import { motion } from 'framer-motion';
+import { GraduationCap, Cpu, Code, Microchip, Briefcase, Users, Lightbulb, Compass } from 'lucide-react';
+import { SpotlightCard } from '@/components/ui/spotlight-card';
 
 const cardData = [
   {
-    title: 'Programs For Everyone',
-    description: 'A single place for trainings, courses, internships, and career-building events.',
-    className: 'md:col-span-2 lg:col-span-2',
-    items: ['CRT', 'Projects', 'Internships', 'Workshops', 'Hackathons', 'Placement guidance', 'Resume building'],
+    title: 'Career Ready Training',
+    description: 'Industry-oriented CRT programs designed to make students placement-ready.',
+    className: 'md:col-span-2',
+    icon: GraduationCap,
+    glowColor: 'rgba(249, 115, 22, 0.15)', // orange
+    items: ['Aptitude', 'Verbal', 'Coding', 'Mock Assessments'],
   },
   {
-    title: 'Training Tracks',
-    description: 'Technical and job-ready tracks built for practical skill growth.',
-    items: ['AIML', 'AI', 'Embedded systems', 'IoT', 'Python', 'C', 'Java', 'DSA with Python/C/Java'],
+    title: 'AI & Emerging Technologies',
+    description: 'Master the future of tech with hands-on AI model development and deployment.',
+    className: 'md:col-span-1',
+    icon: Cpu,
+    glowColor: 'rgba(168, 85, 247, 0.15)', // purple
+    items: ['Artificial Intelligence', 'Machine Learning', 'Generative AI', 'Prompt Engineering', 'Deep Learning'],
   },
   {
-    title: 'Course Paths',
-    description: 'Build production-grade apps across the most in-demand stacks.',
-    items: ['Python full stack', 'Java full stack', 'MERN stack'],
+    title: 'Full Stack Development',
+    description: 'Build scalable web applications from frontend interfaces to backend databases.',
+    className: 'md:col-span-1',
+    icon: Code,
+    glowColor: 'rgba(59, 130, 246, 0.15)', // blue
+    items: ['HTML', 'CSS', 'JavaScript', 'React', 'Next.js', 'Node.js', 'APIs', 'Databases'],
   },
   {
-    title: 'Career Skills',
-    description: 'Practice the hiring skills that turn training into offers.',
-    items: ['Aptitude and reasoning', 'Soft skills', 'Verbal'],
+    title: 'Embedded & IoT',
+    description: 'Bridge the physical and digital worlds with hardware programming.',
+    className: 'md:col-span-1',
+    icon: Microchip,
+    glowColor: 'rgba(34, 197, 94, 0.15)', // green
+    items: ['Embedded C', 'Microcontrollers', 'IoT', 'Sensors', 'Hardware Projects'],
+  },
+  {
+    title: 'Placement Support',
+    description: 'End-to-end guidance to land your dream role in top tech companies.',
+    className: 'md:col-span-1',
+    icon: Briefcase,
+    glowColor: 'rgba(249, 115, 22, 0.15)', // orange
+    items: ['Resume Building', 'Mock Interviews', 'Company-specific Training', 'HR Preparation', 'Soft Skills'],
+  },
+  {
+    title: 'Internships & Live Projects',
+    description: 'Gain real-world experience building products that solve actual problems.',
+    className: 'md:col-span-2',
+    icon: Users,
+    glowColor: 'rgba(59, 130, 246, 0.15)', // blue
+    items: ['Industry Projects', 'Team Collaboration', 'Portfolio Building', 'Client Experience'],
+  },
+  {
+    title: 'Workshops & Hackathons',
+    description: 'Compete, learn, and build rapidly in intensive technical events.',
+    className: 'md:col-span-1',
+    icon: Lightbulb,
+    glowColor: 'rgba(239, 68, 68, 0.15)', // red
+    items: ['Technical Workshops', 'Coding Challenges', 'AI Events', 'Innovation Programs'],
+  },
+  {
+    title: 'Career Mentorship',
+    description: 'Navigate your career path with guidance from industry veterans.',
+    className: 'md:col-span-1',
+    icon: Compass,
+    glowColor: 'rgba(168, 85, 247, 0.15)', // purple
+    items: ['One-on-One Guidance', 'Career Planning', 'Roadmaps', 'Progress Tracking'],
   },
 ];
 
 export default function CoursesSection() {
-  const headerRef = useRef(null);
-  const isHeaderInView = useInView(headerRef, { once: true, margin: '-50px' });
-
   return (
-    <section className="video-section min-h-screen bg-black py-24 md:py-32 px-4" id="courses">
-      <video className="section-bg" src={FEATURE_VIDEO} autoPlay loop muted playsInline />
-      <div className="section-overlay" />
-      <div className="bg-noise absolute inset-0 opacity-[0.08] pointer-events-none" />
-
-      <div className="relative z-10 max-w-7xl mx-auto">
-        <div ref={headerRef} className="mb-12 max-w-4xl">
+    <div className="py-24 md:py-32 px-4" id="courses">
+      <div className="relative z-10 max-w-6xl mx-auto">
+        <div className="mb-16 text-center max-w-3xl mx-auto">
           <motion.p
+            initial={{ opacity: 0, y: 15 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+            className="text-[10px] sm:text-xs uppercase tracking-[0.2em] mb-4"
+            style={{ color: 'rgba(222,219,200,0.4)' }}
+          >
+            PROGRAMS &amp; LEARNING PATHS
+          </motion.p>
+          <motion.h2
             initial={{ opacity: 0, y: 20 }}
-            animate={isHeaderInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-            className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-light leading-tight mb-2"
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.7, delay: 0.1 }}
+            className="text-3xl sm:text-4xl md:text-5xl font-light mb-6"
             style={{ color: '#E1E0CC' }}
           >
-            All programs in a bento grid.
-          </motion.p>
+            Everything you need to launch your tech career.
+          </motion.h2>
           <motion.p
             initial={{ opacity: 0, y: 20 }}
-            animate={isHeaderInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.7, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
-            className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-light"
-            style={{ color: 'rgba(225,224,204,0.58)' }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.7, delay: 0.2 }}
+            className="text-sm sm:text-base leading-relaxed max-w-2xl mx-auto"
+            style={{ color: 'rgba(225,224,204,0.55)' }}
           >
-            {companyProfile.name} provides CRT, projects, internships, workshops, hackathons, placement guidance, resume building, and all of the courses and trainings that sit inside the programs ecosystem.
+            From industry-focused CRT programs to AI, full-stack development, embedded systems, internships, hackathons, placement preparation, and career mentoring—CrestSow brings every learning experience into one structured ecosystem.
           </motion.p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 lg:auto-rows-[minmax(180px,auto)]">
-          <motion.div
-            className="glass-card rounded-2xl overflow-hidden min-h-[220px] lg:row-span-2"
-            initial={{ scale: 0.95, opacity: 0 }}
-            whileInView={{ scale: 1, opacity: 1 }}
-            viewport={{ once: true, margin: '-100px' }}
-            transition={{ duration: 0.65, ease: [0.22, 1, 0.36, 1] }}
-          >
-            <video
-              src={FEATURE_VIDEO}
-              autoPlay
-              loop
-              muted
-              playsInline
-              className="absolute inset-0 w-full h-full object-cover"
-              style={{ zIndex: 0 }}
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent" style={{ zIndex: 1 }} />
-            <div className="absolute bottom-4 left-4" style={{ zIndex: 4 }}>
-              <p className="font-medium text-sm" style={{ color: '#E1E0CC' }}>
-                Your learning canvas.
-              </p>
-            </div>
-          </motion.div>
-
-          {cardData.map((card) => (
-            <FeatCard
-              key={card.title}
-              title={card.title}
-              description={card.description}
-              className={card.className}
-            >
-              <ul className="flex h-full flex-wrap gap-2 p-4 content-start">
-                {card.items.map((item) => (
-                  <li
-                    key={item}
-                    className="rounded-full border border-white/10 bg-black/40 px-3 py-1 text-[11px] tracking-wide"
-                  >
-                    {item}
-                  </li>
-                ))}
-              </ul>
-            </FeatCard>
-          ))}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 lg:gap-6">
+          {cardData.map((card, index) => {
+            const Icon = card.icon;
+            return (
+              <SpotlightCard
+                key={card.title}
+                className={`p-6 sm:p-8 ${card.className}`}
+                glowColor={card.glowColor}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: '-50px' }}
+                transition={{ duration: 0.5, delay: index * 0.1 }}
+              >
+                <div className="flex items-center gap-4 mb-5">
+                  <div className="w-12 h-12 rounded-2xl flex items-center justify-center shrink-0" style={{ background: 'rgba(255,255,255,0.04)' }}>
+                    <Icon size={22} style={{ color: '#DEDBC8' }} />
+                  </div>
+                  <h3 className="text-lg sm:text-xl font-semibold" style={{ color: 'rgba(255,255,255,0.98)' }}>
+                    {card.title}
+                  </h3>
+                </div>
+                <p className="text-xs sm:text-sm leading-relaxed mb-6 flex-1" style={{ color: 'rgba(255,255,255,0.78)' }}>
+                  {card.description}
+                </p>
+                
+                <div className="flex flex-wrap gap-2 mt-auto">
+                  {card.items.map((item) => (
+                    <span
+                      key={item}
+                      className="px-3 py-1.5 rounded-full text-[10px] sm:text-[11px] font-medium tracking-wide transition-colors group-hover:bg-white/5"
+                      style={{
+                        background: 'rgba(255,255,255,0.03)',
+                        border: '1px solid rgba(255,255,255,0.08)',
+                        color: 'rgba(255,255,255,0.90)',
+                      }}
+                    >
+                      {item}
+                    </span>
+                  ))}
+                </div>
+              </SpotlightCard>
+            );
+          })}
         </div>
       </div>
-    </section>
+    </div>
   );
 }

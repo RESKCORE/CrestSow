@@ -68,7 +68,7 @@ export default function Navbar() {
       {/* Full-screen mobile menu */}
       {isOpen && (
         <div
-          className="fixed inset-0 z-40 bg-black flex flex-col items-center justify-center gap-10 md:hidden"
+          className="fixed inset-0 z-40 bg-black/60 backdrop-blur-[28px] flex flex-col items-center justify-center gap-10 md:hidden"
           onClick={() => setIsOpen(false)}
         >
           <button

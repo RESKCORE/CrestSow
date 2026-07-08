@@ -1,7 +1,8 @@
 'use client';
 
-import { motion } from 'framer-motion';
+import { motion, useScroll, useTransform } from 'framer-motion';
 import { useRouter } from 'next/navigation';
+import { useRef } from 'react';
 import { FlipFadeText } from '@/components/ui/flip-fade-text';
 import { CreepyButton } from '@/components/ui/creepy-button';
 import { companyProfile } from '@/lib/data/company';
@@ -11,9 +12,21 @@ const HERO_VIDEO =
 
 export default function HeroSection() {
   const router = useRouter();
+  const ref = useRef(null);
+
+  const { scrollYProgress } = useScroll({
+    target: ref,
+    offset: ["start start", "end start"]
+  });
+
+  const opacity = useTransform(scrollYProgress, [0, 0.8], [1, 0]);
 
   return (
-    <section className="h-dvh p-4 md:p-6">
+    <motion.section 
+      ref={ref}
+      style={{ opacity }}
+      className="h-dvh p-4 md:p-6 bg-black"
+    >
       <div className="relative h-full rounded-2xl md:rounded-[2rem] overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-br from-[#1a0f0a] via-[#0d0d0d] to-[#08080f]" />
 
@@ -25,7 +38,6 @@ export default function HeroSection() {
           playsInline
           className="absolute inset-0 w-full h-full object-cover"
         />
-
         <div className="noise-overlay absolute inset-0 opacity-[0.7] mix-blend-overlay pointer-events-none" />
         <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-transparent to-black/70" />
 
@@ -69,6 +81,6 @@ export default function HeroSection() {
           </div>
         </div>
       </div>
-    </section>
+    </motion.section>
   );
 }

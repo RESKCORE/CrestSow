@@ -44,12 +44,7 @@ export default function LoginPage() {
               <input
                 type="email"
                 placeholder="you@example.com"
-                className="w-full rounded-xl px-4 py-3 text-sm outline-none transition-all"
-                style={{
-                  background: '#212121',
-                  border: '1px solid rgba(255,255,255,0.06)',
-                  color: '#E1E0CC',
-                }}
+                className="w-full rounded-xl px-4 py-3 text-sm outline-none transition-all glass-input"
               />
             </div>
 
@@ -63,12 +58,7 @@ export default function LoginPage() {
               <input
                 type="password"
                 placeholder="••••••••"
-                className="w-full rounded-xl px-4 py-3 text-sm outline-none transition-all"
-                style={{
-                  background: '#212121',
-                  border: '1px solid rgba(255,255,255,0.06)',
-                  color: '#E1E0CC',
-                }}
+                className="w-full rounded-xl px-4 py-3 text-sm outline-none transition-all glass-input"
               />
             </div>
 
