@@ -1,6 +1,8 @@
 import HeroSection from '@/components/home/HeroSection';
-import AboutSection from '@/components/home/AboutSection';
+import BuiltForSection from '@/components/home/BuiltForSection';
 import CoursesSection from '@/components/home/CoursesSection';
+
+import TestimonialsSection from '@/components/home/TestimonialsSection';
 
 export const metadata = {
   title: 'CrestSow - CRT, Projects, Internships & Training',
@@ -12,11 +14,10 @@ export default function HomePage() {
   return (
     <>
       <HeroSection />
-      <section>
-        <AboutSection />
-        <CoursesSection />
-        {/* Future Sections (Testimonials / Contact / CTA) */}
-      </section>
+      <BuiltForSection />
+
+      <CoursesSection />
+      <TestimonialsSection />
     </>
   );
 }

@@ -2,7 +2,7 @@
 
 import { useEffect, useState, useCallback, useMemo } from 'react';
 import { motion } from 'framer-motion';
-import { CreepyButton } from '@/components/ui/creepy-button';
+import Link from 'next/link';
 import {
   ArrowRight,
   GraduationCap,
@@ -19,6 +19,7 @@ import { companyProfile } from '@/lib/data/company';
 import { internships } from '@/lib/data/internships';
 import useEmblaCarousel from 'embla-carousel-react';
 import Autoplay from 'embla-carousel-autoplay';
+import PointerGlowCard from '@/components/ui/PointerGlowCard';
 
 const featureCards = [
   {
@@ -43,6 +44,9 @@ const featureCards = [
   },
 ];
 
+const badgeTints = ['bg-[#E8F0FE]', 'bg-[#E6F7EF]', 'bg-[#F1EAFE]', 'bg-[#FDEEE3]'];
+const textTints = ['text-[#4C7FFF]', 'text-[#10B981]', 'text-[#8B5CF6]', 'text-[#F97316]'];
+
 function EmblaCarousel({ items }) {
   const [selectedIndex, setSelectedIndex] = useState(0);
 
@@ -52,41 +56,17 @@ function EmblaCarousel({ items }) {
   );
 
   const [emblaRef, emblaApi] = useEmblaCarousel(
-    {
-      loop: true,
-      align: 'center',
-      containScroll: 'keepSnaps',
-      dragFree: false,
-    },
+    { loop: true, align: 'center', containScroll: 'keepSnaps', dragFree: false },
     [autoplayPlugin]
   );
 
   useEffect(() => {
     if (!emblaApi) return;
-    const onSelect = () => {
-      setSelectedIndex(emblaApi.selectedScrollSnap());
-    };
+    const onSelect = () => setSelectedIndex(emblaApi.selectedScrollSnap());
     onSelect();
     emblaApi.on('select', onSelect);
     emblaApi.on('reInit', onSelect);
-    return () => {
-      emblaApi.off('select', onSelect);
-      emblaApi.off('reInit', onSelect);
-    };
-  }, [emblaApi]);
-
-  useEffect(() => {
-    if (!emblaApi) return;
-    const container = emblaApi.containerNode();
-    if (!container) return;
-    const onWheel = (e) => {
-      e.preventDefault();
-      const delta = e.deltaY + e.deltaX;
-      if (delta > 0) emblaApi.scrollNext();
-      else emblaApi.scrollPrev();
-    };
-    container.addEventListener('wheel', onWheel, { passive: false });
-    return () => container.removeEventListener('wheel', onWheel);
+    return () => { emblaApi.off('select', onSelect); emblaApi.off('reInit', onSelect); };
   }, [emblaApi]);
 
   const scrollPrev = useCallback(() => emblaApi?.scrollPrev(), [emblaApi]);
@@ -99,67 +79,35 @@ function EmblaCarousel({ items }) {
           {items.map((item, i) => {
             const isActive = i === selectedIndex;
             return (
-              <div
-                key={item.id}
-                className="relative shrink-0 grow-0 min-w-0 px-3 flex-[0_0_100%] md:flex-[0_0_50%] lg:flex-[0_0_40%]"
-              >
+              <div key={item.id} className="relative shrink-0 grow-0 min-w-0 px-3 flex-[0_0_100%] md:flex-[0_0_50%] lg:flex-[0_0_40%]">
                 <motion.div
-                  className="glass-card rounded-2xl p-6 flex flex-col gap-3 cursor-pointer select-none"
-                  animate={{
-                    scale: isActive ? 1 : 0.92,
-                    opacity: isActive ? 1 : 0.5,
-                    rotateY: isActive ? 0 : i < selectedIndex ? -3 : 3,
-                  }}
-                  transition={{
-                    duration: 0.5,
-                    ease: [0.23, 1, 0.32, 1],
-                  }}
-                  style={{ perspective: 1200 }}
+                  className="cursor-pointer select-none h-full"
+                  animate={{ scale: isActive ? 1 : 0.95, opacity: isActive ? 1 : 0.6 }}
+                  transition={{ duration: 0.5, ease: [0.23, 1, 0.32, 1] }}
                 >
-                  <div
-                    className="text-[10px] uppercase tracking-wider px-2.5 py-0.5 rounded-full w-fit font-medium"
-                    style={{
-                      background: 'rgba(255,255,255,0.07)',
-                      border: '1px solid rgba(255,255,255,0.1)',
-                      color: 'rgba(225,224,204,0.6)',
-                    }}
-                  >
-                    {item.domain}
-                  </div>
-
-                  <p className="text-[11px] font-medium" style={{ color: 'rgba(225,224,204,0.4)' }}>
-                    {item.company}
-                  </p>
-
-                  <h3 className="text-base font-semibold" style={{ color: '#E1E0CC' }}>
-                    {item.title}
-                  </h3>
-
-                  <p className="text-xs leading-relaxed flex-1" style={{ color: 'rgba(225,224,204,0.5)' }}>
-                    {item.description}
-                  </p>
-
-                  <div className="flex items-center gap-4 text-xs" style={{ color: 'rgba(225,224,204,0.35)' }}>
-                    <span className="flex items-center gap-1">
-                      <Clock size={10} /> {item.duration}
+                  <PointerGlowCard className="bg-white border border-[#E5E7EB] rounded-3xl p-8 flex flex-col gap-4 h-full shadow-sm hover:shadow-md transition-shadow">
+                    <span className="text-xs font-semibold uppercase tracking-wider text-[#4C7FFF] bg-[#E8F0FE] px-3 py-1 rounded-full w-fit">
+                      {item.domain}
                     </span>
-                    <span className="flex items-center gap-1">
-                      <MapPin size={10} /> {item.type}
-                    </span>
-                    <span className="flex items-center gap-1 ml-auto" style={{ color: 'rgba(225,224,204,0.5)' }}>
-                      <IndianRupee size={10} /> {item.stipend}
-                    </span>
-                  </div>
-
-                  <CreepyButton
-                    href="/login"
-                    size="sm"
-                    className="w-full mt-1"
-                    simple
-                  >
-                    Apply now
-                    <ArrowRight size={12} />
-                  </CreepyButton>
+                    <p className="text-xs font-bold text-[#9CA3AF]">
+                      {item.company}
+                    </p>
+                    <h3 className="font-bold text-xl text-[#0A0A0A]">
+                      {item.title}
+                    </h3>
+                    <p className="text-sm text-[#6B7280] flex-1 leading-relaxed">
+                      {item.description}
+                    </p>
+                    <div className="flex items-center gap-4 text-xs font-medium text-[#4B5563] mt-4 pt-4 border-t border-[#E5E7EB]">
+                      <span className="flex items-center gap-1.5"><Clock size={14} /> {item.duration}</span>
+                      <span className="flex items-center gap-1.5"><MapPin size={14} /> {item.type}</span>
+                      <span className="flex items-center gap-1.5 ml-auto text-[#0A0A0A] font-bold"><IndianRupee size={14} /> {item.stipend}</span>
+                    </div>
+                    <Link href="/login" className="btn-primary w-full mt-4 justify-between">
+                      <span>Apply now</span>
+                      <ArrowRight size={16} />
+                    </Link>
+                  </PointerGlowCard>
                 </motion.div>
               </div>
             );
@@ -167,41 +115,16 @@ function EmblaCarousel({ items }) {
         </div>
       </div>
 
-      <button
-        onClick={scrollPrev}
-        className="hidden sm:flex absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 w-10 h-10 rounded-full items-center justify-center z-10"
-        style={{
-          background: 'rgba(255,255,255,0.06)',
-          border: '1px solid rgba(255,255,255,0.12)',
-          backdropFilter: 'blur(20px)',
-        }}
-      >
-        <ChevronLeft size={16} style={{ color: '#E1E0CC' }} />
+      <button onClick={scrollPrev} className="hidden sm:flex absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 w-12 h-12 rounded-full items-center justify-center z-10 bg-white border border-[#E5E7EB] shadow-sm hover:bg-[#F5F6F8] transition-colors text-[#0A0A0A]">
+        <ChevronLeft size={20} />
       </button>
-      <button
-        onClick={scrollNext}
-        className="hidden sm:flex absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 w-10 h-10 rounded-full items-center justify-center z-10"
-        style={{
-          background: 'rgba(255,255,255,0.06)',
-          border: '1px solid rgba(255,255,255,0.12)',
-          backdropFilter: 'blur(20px)',
-        }}
-      >
-        <ChevronRight size={16} style={{ color: '#E1E0CC' }} />
+      <button onClick={scrollNext} className="hidden sm:flex absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 w-12 h-12 rounded-full items-center justify-center z-10 bg-white border border-[#E5E7EB] shadow-sm hover:bg-[#F5F6F8] transition-colors text-[#0A0A0A]">
+        <ChevronRight size={20} />
       </button>
 
-      <div className="flex justify-center gap-2 mt-6">
+      <div className="flex justify-center gap-2 mt-8">
         {items.map((_, i) => (
-          <button
-            key={i}
-            onClick={() => emblaApi?.scrollTo(i)}
-            className="rounded-full transition-all duration-300"
-            style={{
-              width: i === selectedIndex ? 24 : 6,
-              height: 6,
-              background: i === selectedIndex ? '#DEDBC8' : 'rgba(255,255,255,0.15)',
-            }}
-          />
+          <button key={i} onClick={() => emblaApi?.scrollTo(i)} className="rounded-full transition-all duration-300" style={{ width: i === selectedIndex ? 24 : 8, height: 8, background: i === selectedIndex ? '#0A0A0A' : '#D1D5DB' }} />
         ))}
       </div>
     </div>
@@ -210,212 +133,141 @@ function EmblaCarousel({ items }) {
 
 export default function ProgramsPage() {
   return (
-    <>
-      <div className="relative z-10">
-        {/* ── Hero ── */}
-        <section className="relative min-h-[60vh] pt-36 pb-28 px-4 overflow-hidden">
-          <div className="relative z-10 max-w-6xl mx-auto">
-            <motion.p
-              className="text-[10px] sm:text-xs uppercase tracking-[0.25em] mb-6"
-              style={{ color: 'rgba(222,219,200,0.35)' }}
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 0.7 }}
-            >
+    <div className="relative z-10 bg-[#FFFFFF]">
+      {/* Hero */}
+      <section className="pt-32 pb-16 px-4 max-w-7xl mx-auto">
+        <div className="min-h-[45vh] flex items-center justify-center ambient-panel rounded-[32px] border border-[#E5E7EB] p-8">
+          <div className="max-w-4xl mx-auto w-full text-center">
+            <motion.p className="eyebrow mb-4" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.7 }}>
               Programs
             </motion.p>
-            <motion.h1
-              className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-light leading-[0.9]"
-              style={{ color: '#E1E0CC' }}
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.85, ease: [0.16, 1, 0.3, 1] }}
-            >
-              All learning
-              <br />
-              <span className="font-serif italic" style={{ color: 'rgba(222,219,200,0.6)' }}>
-                in one place.
-              </span>
-            </motion.h1>
-            <motion.p
-              className="text-sm leading-relaxed max-w-2xl mt-8"
-              style={{ color: 'rgba(225,224,204,0.55)' }}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.85, delay: 0.2 }}
-            >
-              {companyProfile.name} brings trainings, courses, hackathons, CRT, internships, workshops,
-              placement guidance, resume building, and project work together in a single programs hub.
-            </motion.p>
-          </div>
-        </section>
+          <motion.h1
+            className="text-5xl sm:text-6xl md:text-7xl text-[#0A0A0A] tracking-tight leading-none mb-6"
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.85, ease: [0.16, 1, 0.3, 1] }}
+          >
+            All learning<br />in one place.
+          </motion.h1>
+          <motion.p className="text-lg text-[#6B7280] leading-relaxed max-w-2xl mx-auto mt-6" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.85, delay: 0.2 }}>
+            {companyProfile.name} brings trainings, courses, hackathons, CRT, internships, workshops,
+            placement guidance, resume building, and project work together in a single programs hub.
+          </motion.p>
+        </div>
+        </div>
+      </section>
 
-        {/* ── Feature Cards ── */}
-        <section className="px-4 pb-28">
-          <div className="max-w-6xl mx-auto grid md:grid-cols-2 xl:grid-cols-4 gap-5">
-            {featureCards.map((card, index) => {
-              const Icon = card.icon;
-              return (
-                <motion.div
-                  key={card.title}
-                  className="glass-card rounded-2xl p-7 flex flex-col gap-4"
-                  initial={{ opacity: 0, y: 24 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.6, delay: index * 0.1, ease: [0.16, 1, 0.3, 1] }}
-                >
-                  <div
-                    className="w-11 h-11 rounded-xl flex items-center justify-center"
-                    style={{
-                      background: 'rgba(255,255,255,0.06)',
-                      border: '1px solid rgba(255,255,255,0.1)',
-                    }}
-                  >
-                    <Icon size={20} style={{ color: '#DEDBC8' }} />
+      {/* Feature Cards */}
+      <section className="py-24 px-4">
+        <div className="max-w-6xl mx-auto grid md:grid-cols-2 xl:grid-cols-4 gap-6">
+          {featureCards.map((card, index) => {
+            const Icon = card.icon;
+            const tint = badgeTints[index % badgeTints.length];
+            const color = textTints[index % textTints.length];
+            return (
+              <motion.div
+                key={card.title}
+                initial={{ opacity: 0, y: 24 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6, delay: index * 0.1, ease: [0.16, 1, 0.3, 1] }}
+              >
+                <PointerGlowCard className="bg-white border border-[#E5E7EB] rounded-3xl p-6 h-full flex flex-col gap-4 shadow-sm hover:shadow-md transition-shadow">
+                  <div className={`w-12 h-12 flex items-center justify-center rounded-xl ${tint}`}>
+                    <Icon size={20} className={color} />
                   </div>
-                  <h2 className="text-lg font-semibold" style={{ color: '#E1E0CC' }}>
+                  <h3 className="font-bold text-lg text-[#0A0A0A]">
                     {card.title}
-                  </h2>
-                  <p className="text-sm leading-relaxed" style={{ color: 'rgba(225,224,204,0.55)' }}>
+                  </h3>
+                  <p className="text-sm text-[#6B7280] flex-1 leading-relaxed">
                     {card.description}
                   </p>
+                </PointerGlowCard>
+              </motion.div>
+            );
+          })}
+        </div>
+      </section>
+
+      {/* Featured Programs Carousel */}
+      <section className="py-24 px-4 bg-[#F5F6F8]">
+        <div className="max-w-6xl mx-auto">
+          <div className="text-center mb-16">
+            <p className="eyebrow mb-4">Featured Programs</p>
+            <h2 className="text-4xl sm:text-5xl text-[#0A0A0A] tracking-tight flex items-center justify-center gap-3">
+              Explore open positions
+              <span className="text-[10px] font-medium tracking-widest uppercase bg-[#F5F6F8] border border-[#E5E7EB] text-[#6B7280] px-2 py-1 rounded-full relative -top-2">Example Listings</span>
+            </h2>
+          </div>
+          <EmblaCarousel items={internships} />
+        </div>
+      </section>
+
+      {/* Programs Grid */}
+      <section className="py-24 px-4">
+        <div className="max-w-6xl mx-auto">
+          <div className="text-center mb-16">
+            <p className="eyebrow mb-4">All Programs</p>
+            <h2 className="text-4xl sm:text-5xl text-[#0A0A0A] tracking-tight flex items-center justify-center gap-3">
+              Browse the full catalog
+              <span className="text-[10px] font-medium tracking-widest uppercase bg-[#FFFFFF] border border-[#E5E7EB] text-[#6B7280] px-2 py-1 rounded-full relative -top-2">Example Listings</span>
+            </h2>
+          </div>
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            {internships.map((item, index) => {
+              const tint = badgeTints[index % badgeTints.length];
+              const color = textTints[index % textTints.length];
+              return (
+                <motion.div
+                  key={item.id}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, margin: "-50px" }}
+                  transition={{ duration: 0.5, delay: index * 0.05 }}
+                >
+                  <PointerGlowCard className="bg-white border border-[#E5E7EB] rounded-3xl p-6 md:p-8 flex flex-col gap-4 h-full shadow-sm hover:shadow-md transition-shadow">
+                    <span className={`text-xs font-semibold uppercase tracking-wider px-3 py-1 rounded-full w-fit ${tint} ${color}`}>
+                      {item.domain}
+                    </span>
+                    <p className="text-xs font-bold text-[#9CA3AF]">
+                      {item.company}
+                    </p>
+                    <h3 className="font-bold text-xl text-[#0A0A0A]">
+                      {item.title}
+                    </h3>
+                    <p className="text-sm text-[#6B7280] flex-1 leading-relaxed">
+                      {item.description}
+                    </p>
+                    <div className="flex items-center gap-4 pt-4 mt-2 text-xs font-medium text-[#4B5563] border-t border-[#E5E7EB]">
+                      <span className="flex items-center gap-1.5"><Clock size={14} /> {item.duration}</span>
+                      <span className="flex items-center gap-1.5"><MapPin size={14} /> {item.type}</span>
+                    </div>
+                    <Link href="/login" className="btn-secondary w-full mt-2 justify-between">
+                      <span>View details</span>
+                      <ArrowRight size={16} />
+                    </Link>
+                  </PointerGlowCard>
                 </motion.div>
               );
             })}
           </div>
-        </section>
+        </div>
+      </section>
 
-        {/* ── Featured Programs Carousel ── */}
-        <section className="px-4 pb-28">
-          <div className="max-w-6xl mx-auto">
-            <motion.p
-              className="text-[10px] sm:text-xs uppercase tracking-[0.25em] mb-4"
-              style={{ color: 'rgba(222,219,200,0.35)' }}
-              initial={{ opacity: 0 }}
-              whileInView={{ opacity: 1 }}
-              viewport={{ once: true }}
-            >
-              Featured Programs
-            </motion.p>
-            <motion.h2
-              className="text-2xl sm:text-3xl font-light mb-10"
-              style={{ color: '#E1E0CC' }}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.7 }}
-            >
-              Explore open positions
-            </motion.h2>
-
-            <EmblaCarousel items={internships} />
-          </div>
-        </section>
-
-        {/* ── Programs Grid ── */}
-        <section className="px-4 pb-28">
-          <div className="max-w-6xl mx-auto">
-            <motion.p
-              className="text-[10px] sm:text-xs uppercase tracking-[0.25em] mb-4"
-              style={{ color: 'rgba(222,219,200,0.35)' }}
-              initial={{ opacity: 0 }}
-              whileInView={{ opacity: 1 }}
-              viewport={{ once: true }}
-            >
-              All Programs
-            </motion.p>
-            <motion.h2
-              className="text-2xl sm:text-3xl font-light mb-10"
-              style={{ color: '#E1E0CC' }}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.7 }}
-            >
-              Browse the full catalog
-            </motion.h2>
-
-            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
-              {internships.map((item, index) => (
-                <motion.div
-                  key={item.id}
-                  className="glass-card rounded-2xl p-6 flex flex-col gap-3"
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.55, delay: index * 0.06, ease: [0.16, 1, 0.3, 1] }}
-                >
-                  <div className="flex items-start justify-between gap-3">
-                    <span
-                      className="text-[10px] uppercase tracking-wider px-2.5 py-0.5 rounded-full font-medium"
-                      style={{
-                        background: 'rgba(255,255,255,0.07)',
-                        border: '1px solid rgba(255,255,255,0.1)',
-                        color: 'rgba(225,224,204,0.6)',
-                      }}
-                    >
-                      {item.domain}
-                    </span>
-                  </div>
-
-                  <p className="text-[11px] font-medium" style={{ color: 'rgba(225,224,204,0.4)' }}>
-                    {item.company}
-                  </p>
-
-                  <h3 className="text-base font-semibold" style={{ color: '#E1E0CC' }}>
-                    {item.title}
-                  </h3>
-
-                  <p className="text-xs leading-relaxed flex-1" style={{ color: 'rgba(225,224,204,0.5)' }}>
-                    {item.description}
-                  </p>
-
-                  <div
-                    className="flex items-center gap-4 pt-3 text-xs"
-                    style={{ color: 'rgba(225,224,204,0.35)', borderTop: '1px solid rgba(255,255,255,0.06)' }}
-                  >
-                    <span className="flex items-center gap-1">
-                      <Clock size={10} /> {item.duration}
-                    </span>
-                    <span className="flex items-center gap-1">
-                      <MapPin size={10} /> {item.type}
-                    </span>
-                    <span className="flex items-center gap-1 ml-auto" style={{ color: 'rgba(225,224,204,0.5)' }}>
-                      <IndianRupee size={10} /> {item.stipend}
-                    </span>
-                  </div>
-
-                  <CreepyButton
-                    href="/login"
-                    size="sm"
-                    className="w-full mt-1"
-                    simple
-                  >
-                    Apply now
-                    <ArrowRight size={12} />
-                  </CreepyButton>
-                </motion.div>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        {/* ── CTA ── */}
-        <section className="py-24 px-4 text-center">
-          <motion.h2
-            className="text-3xl sm:text-4xl font-light mb-6"
-            style={{ color: '#E1E0CC' }}
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-          >
-            Need help choosing a program?
-          </motion.h2>
-          <CreepyButton href="/contact" simple>
-            Talk to us
-          </CreepyButton>
-        </section>
-      </div>
-    </>
+      {/* CTA */}
+      <section className="py-32 px-4 text-center bg-[#0A0A0A] text-white rounded-t-[32px] mx-2 md:mx-4">
+        <motion.h2
+          className="text-4xl sm:text-5xl mb-8 tracking-tight"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+        >
+          Need help choosing a program?
+        </motion.h2>
+        <a href="/contact" className="btn-secondary !text-[#0A0A0A]">
+          Talk to us <span>→</span>
+        </a>
+      </section>
+    </div>
   );
 }

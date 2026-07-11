@@ -1,10 +1,6 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import FadingVideo from '@/components/shared/FadingVideo';
-
-const PAGE_VIDEO =
-  'https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260307_083826_e938b29f-a43a-41ec-a153-3d4730578ab8.mp4';
 
 const testimonials = [
   {
@@ -54,10 +50,7 @@ const testimonials = [
 export default function TestimonialsPage() {
   return (
     <>
-      <div className="fixed inset-0 z-0 pointer-events-none">
-        <FadingVideo src={PAGE_VIDEO} className="!fixed" />
-        <div className="absolute inset-0 bg-gradient-to-b from-black/80 via-black/50 to-black/90 z-[1]" />
-      </div>
+      <div className="fixed inset-0 bg-background z-0 pointer-events-none" />
 
       <div className="relative z-10">
         {/* Hero */}
@@ -65,7 +58,7 @@ export default function TestimonialsPage() {
         <div className="relative z-10 max-w-6xl mx-auto text-center">
           <motion.p
             className="text-[10px] sm:text-xs uppercase tracking-[0.25em] mb-5"
-            style={{ color: 'rgba(222,219,200,0.35)' }}
+            style={{ color: 'var(--muted-foreground)' }}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.7 }}
@@ -74,14 +67,14 @@ export default function TestimonialsPage() {
           </motion.p>
           <motion.h1
             className="text-4xl sm:text-5xl md:text-6xl font-light leading-[0.9]"
-            style={{ color: '#E1E0CC' }}
+            style={{ color: 'var(--foreground)' }}
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.85, ease: [0.16, 1, 0.3, 1] }}
           >
             What our students
             <br />
-            <span className="font-serif italic" style={{ color: 'rgba(222,219,200,0.6)' }}>
+            <span className="font-serif italic" style={{ color: 'var(--muted-foreground)' }}>
               say.
             </span>
           </motion.h1>
@@ -104,14 +97,14 @@ export default function TestimonialsPage() {
                 {/* Stars */}
                 <div className="flex gap-1">
                   {[...Array(5)].map((_, si) => (
-                    <span key={si} style={{ color: '#DEDBC8', fontSize: '0.7rem' }}>★</span>
+                    <span key={si} style={{ color: 'var(--primary)', fontSize: '0.7rem' }}>★</span>
                   ))}
                 </div>
 
                 {/* Quote */}
                 <p
                   className="text-sm leading-relaxed font-serif italic flex-1"
-                  style={{ color: 'rgba(225,224,204,0.75)' }}
+                  style={{ color: 'var(--muted-foreground)' }}
                 >
                   &ldquo;{t.quote}&rdquo;
                 </p>
@@ -123,14 +116,14 @@ export default function TestimonialsPage() {
                     style={{
                       background: 'linear-gradient(135deg, rgba(255,255,255,0.12), rgba(255,255,255,0.04))',
                       border: '1px solid rgba(255,255,255,0.1)',
-                      color: '#DEDBC8',
+                      color: 'var(--primary)',
                     }}
                   >
                     {t.initials}
                   </div>
                   <div>
-                    <p className="text-sm font-medium" style={{ color: '#E1E0CC' }}>{t.name}</p>
-                    <p className="text-xs" style={{ color: 'rgba(225,224,204,0.35)' }}>{t.role}</p>
+                    <p className="text-sm font-medium" style={{ color: 'var(--foreground)' }}>{t.name}</p>
+                    <p className="text-xs" style={{ color: 'var(--muted-foreground)' }}>{t.role}</p>
                   </div>
                 </div>
               </motion.div>

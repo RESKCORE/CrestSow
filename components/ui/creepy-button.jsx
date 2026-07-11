@@ -116,7 +116,7 @@ export const CreepyButton = ({
                         ease: "linear",
                     }}>
                     <span
-                        className="absolute top-1/2 left-1/2 bg-black rounded-full transition-transform duration-75 ease-out"
+                        className="absolute top-1/2 left-1/2 bg-background rounded-full transition-transform duration-75 ease-out"
                         style={{ ...pupilStyle, width: pupilSize, height: pupilSize }}
                     />
                 </motion.span>
@@ -131,7 +131,7 @@ export const CreepyButton = ({
                         ease: "linear",
                     }}>
                     <span
-                        className="absolute top-1/2 left-1/2 bg-black rounded-full transition-transform duration-75 ease-out"
+                        className="absolute top-1/2 left-1/2 bg-background rounded-full transition-transform duration-75 ease-out"
                         style={{ ...pupilStyle, width: pupilSize, height: pupilSize }}
                     />
                 </motion.span>
@@ -171,7 +171,7 @@ export const CreepyButton = ({
 
     const baseClass = cn(
         "relative rounded-xl cursor-pointer outline-none select-none group tap-highlight-transparent",
-        "bg-black/20 backdrop-blur-[28px]",
+        "bg-background/20 backdrop-blur-[28px]",
         "focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-blue-400",
         className
     );

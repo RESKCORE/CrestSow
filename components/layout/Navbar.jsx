@@ -1,8 +1,9 @@
 'use client';
 
 import { useState } from 'react';
+import { motion } from 'framer-motion';
 import Link from 'next/link';
-import { Menu, X } from 'lucide-react';
+import { Menu, X, Globe } from 'lucide-react';
 import { companyProfile } from '@/lib/data/company';
 
 const navLinks = [
@@ -16,70 +17,71 @@ export default function Navbar() {
 
   return (
     <>
-      {/* Pill navbar — hangs from top edge, rounded only at bottom */}
-      <header className="fixed top-0 left-0 right-0 z-50 flex justify-center pointer-events-none">
-        <nav className="pointer-events-auto bg-black rounded-b-2xl md:rounded-b-3xl px-4 py-2 md:px-8">
-          <div className="flex items-center gap-3 sm:gap-6 md:gap-10 lg:gap-14">
-            {/* Logo */}
+      {/* Floating Capsule Navbar */}
+      <motion.header
+        initial={{ y: -80, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        transition={{ duration: 0.6, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
+        className="fixed top-8 left-0 right-0 z-50 flex justify-center pointer-events-none px-4"
+      >
+        <div className="pointer-events-auto flex items-center bg-[#1C1C1C] rounded-full p-1.5 shadow-2xl shadow-black/20 border border-white/10">
+          
+          {/* Logo (Left) */}
+          <Link
+            href="/"
+            className="flex items-center gap-2 pl-5 pr-3 text-white font-bold text-[15px]"
+          >
+            CrestSow
+          </Link>
+
+          {/* Navigation Links (Middle) */}
+          <nav className="hidden md:flex items-center gap-6 px-4">
+            {navLinks.map((link) => (
+              <Link
+                key={link.href}
+                href={link.href}
+                className="text-[15px] font-medium text-white hover:text-white/70 transition-colors"
+              >
+                {link.label}
+              </Link>
+            ))}
+          </nav>
+
+          {/* Right Action Button */}
+          <div className="flex items-center gap-2 md:pl-2">
             <Link
-              href="/"
-              className="text-sm md:text-base font-bold tracking-tight transition-opacity hover:opacity-70"
-              style={{ color: '#E1E0CC' }}
+              href="/login"
+              className="hidden sm:inline-flex items-center justify-center bg-white text-[#1C1C1C] font-semibold text-[14px] px-5 py-2 rounded-full hover:bg-gray-100 transition-colors"
             >
-              {companyProfile.name}
+              Login
             </Link>
 
-            {/* Nav links — hidden on mobile */}
-            <div className="hidden md:flex items-center gap-6 lg:gap-14">
-              {navLinks.map((link) => (
-                <Link
-                  key={link.href}
-                  href={link.href}
-                  className="text-[10px] sm:text-xs md:text-sm transition-opacity hover:opacity-100"
-                  style={{ color: 'rgba(225, 224, 204, 0.7)' }}
-                >
-                  {link.label}
-                </Link>
-              ))}
-            </div>
-
-            {/* Login + mobile toggle */}
-            <div className="flex items-center gap-3">
-              <Link
-                href="/login"
-                className="text-[10px] sm:text-xs md:text-sm hidden sm:block transition-opacity hover:opacity-100"
-                style={{ color: 'rgba(225, 224, 204, 0.5)' }}
-              >
-                Login
-              </Link>
-              <button
-                onClick={() => setIsOpen(!isOpen)}
-                className="md:hidden p-1 transition-opacity hover:opacity-70"
-                style={{ color: '#E1E0CC' }}
-                aria-label="Toggle menu"
-              >
-                {isOpen ? <X size={18} /> : <Menu size={18} />}
-              </button>
-            </div>
+            {/* Mobile Menu Toggle */}
+            <button
+              onClick={() => setIsOpen(!isOpen)}
+              className="md:hidden w-8 h-8 bg-[#2A2A2A] rounded-full flex items-center justify-center text-white ml-2"
+              aria-label="Toggle menu"
+            >
+              {isOpen ? <X size={18} /> : <Menu size={18} />}
+            </button>
           </div>
-        </nav>
-      </header>
+        </div>
+      </motion.header>
 
       {/* Full-screen mobile menu */}
       {isOpen && (
         <div
-          className="fixed inset-0 z-40 bg-black/60 backdrop-blur-[28px] flex flex-col items-center justify-center gap-10 md:hidden"
+          className="fixed inset-0 z-40 bg-[#EFEFF1]/95 backdrop-blur-xl flex flex-col items-center justify-center gap-10 md:hidden transition-colors duration-300"
           onClick={() => setIsOpen(false)}
         >
           <button
             onClick={() => setIsOpen(false)}
-            className="absolute top-6 right-6"
-            style={{ color: 'rgba(225, 224, 204, 0.6)' }}
+            className="absolute top-6 right-6 text-[#0A0A0A] hover:opacity-70"
           >
             <X size={24} />
           </button>
 
-          <span className="font-bold text-2xl mb-4" style={{ color: '#E1E0CC' }}>
+          <span className="font-bold text-2xl mb-4 text-[#0A0A0A]">
             {companyProfile.name}
           </span>
 
@@ -88,8 +90,7 @@ export default function Navbar() {
               key={link.href}
               href={link.href}
               onClick={() => setIsOpen(false)}
-              className="text-2xl font-light tracking-wide transition-opacity hover:opacity-70"
-              style={{ color: '#E1E0CC' }}
+              className="text-2xl font-light tracking-wide transition-opacity hover:opacity-70 text-[#0A0A0A]"
             >
               {link.label}
             </Link>
@@ -98,8 +99,7 @@ export default function Navbar() {
           <Link
             href="/login"
             onClick={() => setIsOpen(false)}
-            className="text-lg font-light"
-            style={{ color: 'rgba(225, 224, 204, 0.4)' }}
+            className="text-lg font-light text-[#6B7280] hover:text-[#0A0A0A]"
           >
             Login
           </Link>

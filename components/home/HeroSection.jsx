@@ -1,86 +1,101 @@
 'use client';
 
-import { motion, useScroll, useTransform } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { useRouter } from 'next/navigation';
-import { useRef } from 'react';
-import { FlipFadeText } from '@/components/ui/flip-fade-text';
-import { CreepyButton } from '@/components/ui/creepy-button';
 import { companyProfile } from '@/lib/data/company';
 
-const HERO_VIDEO =
-  'https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260405_170732_8a9ccda6-5cff-4628-b164-059c500a2b41.mp4';
+const stats = [
+  { value: '12,000+', label: 'Alumni' },
+  { value: '96%', label: 'Placement' },
+  { value: '150+', label: 'Partners' },
+  { value: '14+', label: 'Tracks' },
+];
 
 export default function HeroSection() {
   const router = useRouter();
-  const ref = useRef(null);
-
-  const { scrollYProgress } = useScroll({
-    target: ref,
-    offset: ["start start", "end start"]
-  });
-
-  const opacity = useTransform(scrollYProgress, [0, 0.8], [1, 0]);
 
   return (
-    <motion.section 
-      ref={ref}
-      style={{ opacity }}
-      className="h-dvh p-4 md:p-6 bg-black"
-    >
-      <div className="relative h-full rounded-2xl md:rounded-[2rem] overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-br from-[#1a0f0a] via-[#0d0d0d] to-[#08080f]" />
+    <section className="w-full flex flex-col">
+      {/* Top Hero Area with Gradient */}
+      <div className="relative min-h-[90vh] pt-32 pb-16 px-4 md:px-8 flex flex-col items-center justify-center overflow-hidden rounded-b-[32px] border-b border-[#E5E7EB]/50">
+        {/* Video Background */}
+        <div className="absolute inset-0 z-0">
+          <video
+            autoPlay
+            muted
+            loop
+            playsInline
+            poster="/hero-poster.jpg"
+            preload="auto"
+            className="w-full h-full object-cover opacity-90"
+          >
+            <source src="/hero-student.webm" type="video/webm" />
+            <source src="/hero-student.mp4" type="video/mp4" />
+          </video>
+        </div>
 
-        <video
-          src={HERO_VIDEO}
-          autoPlay
-          loop
-          muted
-          playsInline
-          className="absolute inset-0 w-full h-full object-cover"
-        />
-        <div className="noise-overlay absolute inset-0 opacity-[0.7] mix-blend-overlay pointer-events-none" />
-        <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-transparent to-black/70" />
+        <div className="relative z-10 max-w-4xl mx-auto text-center mt-8 mb-16">
+          <motion.h1
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, ease: "easeOut" }}
+            className="text-5xl sm:text-6xl md:text-7xl font-serif tracking-tight leading-none mb-6"
+          >
+            Train <span className="italic text-[#4C7FFF]">faster.</span> Build better. Get placed.
+          </motion.h1>
 
-        <div className="absolute bottom-0 left-0 right-0 p-6 md:p-10 lg:p-14">
-          <div className="grid grid-cols-12 items-end gap-4 md:gap-6">
-            <div className="col-span-12 lg:col-span-8 select-none">
-              <FlipFadeText
-                words={[companyProfile.name]}
-                className="!min-h-0 !justify-start"
-                textClassName="!text-[clamp(3rem,11vw,13rem)] !font-medium !tracking-[-0.07em] !normal-case !leading-none"
-              />
-            </div>
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.1, ease: "easeOut" }}
+            className="text-lg md:text-xl text-[#6B7280] max-w-[540px] mx-auto mb-10 leading-relaxed"
+          >
+            {companyProfile.name} provides comprehensive training, projects, internships, and placement guidance across trending tech skills to help you land your dream job.
+          </motion.p>
 
-            <div className="col-span-12 lg:col-span-4 flex flex-col gap-5 pb-2 lg:pb-6">
-              <motion.p
-                className="text-xs sm:text-sm md:text-base leading-[1.3]"
-                style={{ color: 'rgba(255,255,255,0.88)' }}
-                initial={{ y: 20, opacity: 0 }}
-                animate={{ y: 0, opacity: 1 }}
-                transition={{ duration: 0.9, delay: 0.55, ease: [0.16, 1, 0.3, 1] }}
-              >
-                {companyProfile.name} provides CRT, projects, internships, workshops, hackathons,
-                placement guidance, resume building, and company-specific trainings across AIML, AI,
-                embedded systems, IoT, Python, C, Java, full stack, aptitude, soft skills, and verbal.
-              </motion.p>
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.2, ease: "easeOut" }}
+            className="flex flex-col sm:flex-row items-center justify-center gap-4"
+          >
+            <button 
+              onClick={() => router.push('/programs')}
+              className="btn-primary w-full sm:w-auto h-12 px-8"
+            >
+              Explore Programs
+            </button>
+            <button 
+              onClick={() => router.push('/contact')}
+              className="btn-secondary w-full sm:w-auto h-12 px-8"
+            >
+              Talk to Us
+            </button>
+          </motion.div>
 
-              <motion.div
-                initial={{ y: 20, opacity: 0 }}
-                animate={{ y: 0, opacity: 1 }}
-                transition={{ duration: 0.9, delay: 0.75, ease: [0.16, 1, 0.3, 1] }}
-              >
-                <CreepyButton
-                  onClick={() => router.push('/programs')}
-                  className="h-14 w-[220px] sm:w-[240px]"
-                  coverClassName="bg-white text-black"
-                >
-                  Explore Programs
-                </CreepyButton>
-              </motion.div>
-            </div>
-          </div>
         </div>
       </div>
-    </motion.section>
+
+      {/* Stats Banner (Outside gradient) */}
+      <motion.div 
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.8, delay: 0.4 }}
+        className="w-full max-w-5xl mx-auto pt-12 pb-16 px-4 md:px-8 bg-white"
+      >
+        <div className="flex flex-wrap justify-center gap-12 md:gap-24 items-center">
+          {stats.map((stat, i) => (
+            <div key={i} className="text-center">
+              <span className="block text-3xl md:text-4xl font-serif text-[#0A0A0A] mb-1">
+                {stat.value}
+              </span>
+              <span className="block text-xs uppercase tracking-widest font-semibold text-[#6B7280]">
+                {stat.label}
+              </span>
+            </div>
+          ))}
+        </div>
+      </motion.div>
+    </section>
   );
 }

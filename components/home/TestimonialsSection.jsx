@@ -1,9 +1,7 @@
 'use client';
 
 import { motion } from 'framer-motion';
-
-const AMBIENT_VIDEO =
-  'https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260405_170732_8a9ccda6-5cff-4628-b164-059c500a2b41.mp4';
+import PointerGlowCard from '@/components/ui/PointerGlowCard';
 
 const testimonials = [
   {
@@ -12,6 +10,7 @@ const testimonials = [
     author: 'Priya Sharma',
     role: 'Frontend Engineer, Razorpay',
     initials: 'PS',
+    type: 'text',
   },
   {
     quote:
@@ -19,6 +18,7 @@ const testimonials = [
     author: 'Marcus Thompson',
     role: 'CTO, Finova Labs',
     initials: 'MT',
+    type: 'photo', // Simulated photo card
   },
   {
     quote:
@@ -26,78 +26,78 @@ const testimonials = [
     author: 'Aisha Patel',
     role: 'Data Analyst, Microsoft',
     initials: 'AP',
+    type: 'text',
   },
 ];
 
 export default function TestimonialsSection() {
   return (
-    <section className="video-section bg-black py-24 md:py-36 px-4" id="testimonials">
-      {/* Shared ambient video */}
-      <video
-        className="section-bg"
-        src={AMBIENT_VIDEO}
-        autoPlay
-        loop
-        muted
-        playsInline
-      />
-      <div className="section-overlay" />
+    <section className="bg-[#F5F6F8] py-24 md:py-32 px-4" id="testimonials">
+      <div className="max-w-6xl mx-auto">
+        <div className="text-center mb-16">
+          <p className="eyebrow mb-4">Alumni Stories</p>
+          <h2 className="text-4xl md:text-5xl tracking-tight">
+            The proof is in the <span className="font-serif italic text-[#4C7FFF]">people.</span>
+          </h2>
+        </div>
 
-      <div className="relative z-10 max-w-7xl mx-auto">
-        <motion.p
-          className="text-[10px] sm:text-xs uppercase tracking-[0.25em] mb-16 text-center"
-          style={{ color: 'rgba(222, 219, 200, 0.35)' }}
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.7 }}
-        >
-          Alumni Stories
-        </motion.p>
-
-        <div className="grid md:grid-cols-3 gap-5">
+        <div className="grid md:grid-cols-3 gap-6">
           {testimonials.map((t, i) => (
-            <motion.div
+            <PointerGlowCard
               key={t.author}
-              className="glass-card rounded-2xl p-8 flex flex-col justify-between gap-8"
-              initial={{ opacity: 0, y: 30 }}
+              initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.7, delay: i * 0.12, ease: [0.16, 1, 0.3, 1] }}
+              viewport={{ once: true, margin: "-50px" }}
+              transition={{ duration: 0.5, delay: i * 0.1 }}
+              className={`relative rounded-3xl p-8 flex flex-col justify-between gap-8 overflow-hidden min-h-[320px] shadow-sm hover:shadow-md transition-shadow ${
+                t.type === 'photo' 
+                  ? 'bg-[#0A0A0A] text-white' 
+                  : 'bg-white border border-[#E5E7EB] text-[#0A0A0A]'
+              }`}
             >
-              {/* Rating */}
-              <div className="flex gap-1">
-                {[...Array(5)].map((_, si) => (
-                  <span key={si} style={{ color: '#DEDBC8', fontSize: '0.75rem' }}>★</span>
-                ))}
-              </div>
-
-              {/* Quote */}
-              <p
-                className="text-sm sm:text-base leading-relaxed font-serif italic flex-1"
-                style={{ color: 'rgba(225,224,204,0.75)' }}
-              >
-                &ldquo;{t.quote}&rdquo;
-              </p>
-
-              {/* Author */}
-              <div className="flex items-center gap-3">
-                <div
-                  className="w-10 h-10 rounded-full flex items-center justify-center text-xs font-bold shrink-0"
-                  style={{
-                    background: 'linear-gradient(135deg, rgba(255,255,255,0.12), rgba(255,255,255,0.04))',
-                    border: '1px solid rgba(255,255,255,0.12)',
-                    color: '#DEDBC8',
-                  }}
-                >
-                  {t.initials}
+              {/* If photo card, simulate an image background with a scrim */}
+              {t.type === 'photo' && (
+                <div className="absolute inset-0 z-0">
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent z-10" />
+                  <div className="w-full h-full bg-[#1F2937] opacity-50" /> {/* Placeholder for actual image */}
                 </div>
+              )}
+
+              <div className="relative z-10 flex flex-col h-full justify-between">
                 <div>
-                  <p className="text-sm font-medium" style={{ color: '#E1E0CC' }}>{t.author}</p>
-                  <p className="text-xs" style={{ color: 'rgba(225,224,204,0.35)' }}>{t.role}</p>
+                  {/* Rating */}
+                  <div className="flex gap-1 mb-6">
+                    {[...Array(5)].map((_, si) => (
+                      <span key={si} className={t.type === 'photo' ? 'text-[#4C7FFF]' : 'text-[#4C7FFF]'} style={{ fontSize: '0.875rem' }}>★</span>
+                    ))}
+                  </div>
+
+                  {/* Quote */}
+                  <p className={`text-base leading-relaxed font-medium ${
+                    t.type === 'photo' ? 'text-white' : 'text-[#4B5563]'
+                  }`}>
+                    "{t.quote}"
+                  </p>
+                </div>
+
+                {/* Author */}
+                <div className="flex items-center gap-3 mt-8">
+                  <div className={`w-10 h-10 rounded-full flex items-center justify-center text-xs font-bold shrink-0 ${
+                    t.type === 'photo' ? 'bg-white/20 text-white' : 'bg-[#F5F6F8] text-[#0A0A0A]'
+                  }`}>
+                    {t.initials}
+                  </div>
+                  <div>
+                    <p className={`text-sm font-bold ${t.type === 'photo' ? 'text-white' : 'text-[#0A0A0A]'}`}>
+                      {t.author}
+                    </p>
+                    <p className={`text-xs ${t.type === 'photo' ? 'text-white/70' : 'text-[#6B7280]'}`}>
+                      {t.role}
+                    </p>
+                  </div>
                 </div>
               </div>
-            </motion.div>
+            </PointerGlowCard>
           ))}
         </div>
       </div>
