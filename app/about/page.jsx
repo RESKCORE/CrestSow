@@ -1,5 +1,6 @@
 'use client';
 
+import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import Image from 'next/image';
 import { companyProfile } from '@/lib/data/company';
@@ -42,6 +43,35 @@ const technologies = [
 ];
 
 export default function AboutPage() {
+  const [activeCardIndex, setActiveCardIndex] = useState(-1);
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth <= 768);
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
+
+  useEffect(() => {
+    if (!isMobile) {
+      setActiveCardIndex(-1);
+      return;
+    }
+
+    const validIndices = technologies.map((t, i) => t.name ? i : -1).filter(i => i !== -1);
+    let currentIndex = 0;
+    
+    setActiveCardIndex(validIndices[0]);
+
+    const interval = setInterval(() => {
+      currentIndex = (currentIndex + 1) % validIndices.length;
+      setActiveCardIndex(validIndices[currentIndex]);
+    }, 2500);
+
+    return () => clearInterval(interval);
+  }, [isMobile]);
+
   return (
     <div className="relative z-10 bg-[#FFFFFF]">
       {/* Section A: Opening */}
@@ -139,6 +169,7 @@ export default function AboutPage() {
               tech.name ? (
                 <FlipCard 
                   key={i} 
+                  isFlipped={activeCardIndex === i}
                   frontContent={
                     <div className={`w-full h-full border border-[#E5E7EB] rounded-3xl p-2 md:p-3 flex items-center justify-center shadow-sm ${tech.tint}`}>
                       <div className="relative w-full h-full rounded-2xl overflow-hidden shadow-[inset_0_0_0_1px_rgba(0,0,0,0.05)]">

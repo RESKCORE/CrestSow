@@ -2,12 +2,16 @@
 
 import React from 'react';
 
-export default function FlipCard({ frontContent, backContent, className = '' }) {
+export default function FlipCard({ frontContent, backContent, className = '', isFlipped = false }) {
   return (
     <div className={`group relative w-full h-full aspect-square perspective-[1000px] ${className}`}>
       <div 
-        className="w-full h-full transition-all duration-500 transform-style-3d group-hover:rotate-y-180"
-        style={{ transformStyle: 'preserve-3d', transitionTimingFunction: 'cubic-bezier(0.4, 0.2, 0.2, 1)' }}
+        className="w-full h-full transition-all duration-500 transform-style-3d md:group-hover:rotate-y-180"
+        style={{ 
+          transformStyle: 'preserve-3d', 
+          transitionTimingFunction: 'cubic-bezier(0.4, 0.2, 0.2, 1)',
+          ...(isFlipped ? { transform: 'rotateY(180deg)' } : {})
+        }}
       >
         {/* Front Face */}
         <div 
