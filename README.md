@@ -29,6 +29,7 @@ AIML, AI, Embedded Systems, IoT, Python, C, Java, DSA (Python / C / Java), Pytho
 - [Framer Motion](https://www.framer.com/motion/)
 - [Embla Carousel](https://www.embla-carousel.com/)
 - [Lucide Icons](https://lucide.dev/)
+- [Nodemailer](https://nodemailer.com/) (contact form email delivery)
 
 ## Getting Started
 
@@ -39,15 +40,22 @@ npm run dev
 
 Open [http://localhost:3000](http://localhost:3000) to view the site.
 
+## Environment Variables
+
+Create a `.env.local` file for the contact form email functionality:
+
+```
+GMAIL_USER=your-email@gmail.com
+GMAIL_APP_PASSWORD=your-app-password
+```
+
 ## Pages
 
 - `/` — Home
 - `/programs` — Programs & Internships
 - `/about` — About & Team
-- `/contact` — Contact
+- `/contact` — Contact (reach out via form, email, phone, or social media)
 - `/testimonials` — Testimonials
-- `/login` — Student Login
-- `/admin/login` — Admin Login
 
 ## Contact
 

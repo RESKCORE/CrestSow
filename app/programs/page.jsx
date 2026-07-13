@@ -103,7 +103,7 @@ function EmblaCarousel({ items }) {
                       <span className="flex items-center gap-1.5"><MapPin size={14} /> {item.type}</span>
                       <span className="flex items-center gap-1.5 ml-auto text-[#0A0A0A] font-bold"><IndianRupee size={14} /> {item.stipend}</span>
                     </div>
-                    <Link href="/login" className="btn-primary w-full mt-4 justify-between">
+                    <Link href="/contact" className="btn-primary w-full mt-4 justify-between">
                       <span>Apply now</span>
                       <ArrowRight size={16} />
                     </Link>
@@ -242,7 +242,7 @@ export default function ProgramsPage() {
                       <span className="flex items-center gap-1.5"><Clock size={14} /> {item.duration}</span>
                       <span className="flex items-center gap-1.5"><MapPin size={14} /> {item.type}</span>
                     </div>
-                    <Link href="/login" className="btn-secondary w-full mt-2 justify-between">
+                    <Link href="/contact" className="btn-secondary w-full mt-2 justify-between">
                       <span>View details</span>
                       <ArrowRight size={16} />
                     </Link>

@@ -9,7 +9,6 @@ import { companyProfile } from '@/lib/data/company';
 const navLinks = [
   { href: '/about', label: 'Our Story' },
   { href: '/programs', label: 'Programs' },
-  { href: '/contact', label: 'Inquiries' },
 ];
 
 export default function Navbar() {
@@ -50,10 +49,10 @@ export default function Navbar() {
           {/* Right Action Button */}
           <div className="flex items-center gap-2 md:pl-2">
             <Link
-              href="/login"
+              href="/contact"
               className="hidden sm:inline-flex items-center justify-center bg-white text-[#1C1C1C] font-semibold text-[14px] px-5 py-2 rounded-full hover:bg-gray-100 transition-colors"
             >
-              Login
+              Contact
             </Link>
 
             {/* Mobile Menu Toggle */}
@@ -97,11 +96,11 @@ export default function Navbar() {
           ))}
 
           <Link
-            href="/login"
+            href="/contact"
             onClick={() => setIsOpen(false)}
             className="text-lg font-light text-[#6B7280] hover:text-[#0A0A0A]"
           >
-            Login
+            Contact
           </Link>
         </div>
       )}

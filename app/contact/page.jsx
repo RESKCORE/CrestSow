@@ -2,8 +2,47 @@
 
 import { useState } from 'react';
 import { motion } from 'framer-motion';
-import { ArrowRight, Mail, Phone, AtSign, Target, CheckCircle } from 'lucide-react';
+import { ArrowRight, Mail, Phone, AtSign, Target, CheckCircle, User } from 'lucide-react';
 import { companyProfile } from '@/lib/data/company';
+import { sendContactEmail } from '../actions/contact';
+
+const Linkedin = ({ size = 24, className = '', ...props }) => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width={size}
+    height={size}
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    className={className}
+    {...props}
+  >
+    <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" />
+    <rect width="4" height="12" x="2" y="9" />
+    <circle cx="4" cy="4" r="2" />
+  </svg>
+);
+
+const Twitter = ({ size = 24, className = '', ...props }) => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width={size}
+    height={size}
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    className={className}
+    {...props}
+  >
+    <path d="M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6 2.2.1 4.4-.6 6-2C3 15.5.5 9.6 3 5c2.2 2.6 5.6 4.1 9 4-.9-4.2 4-6.6 7-3.8 1.1 0 3-1.2 3-1.2z" />
+  </svg>
+);
 
 const contactInfo = [
   { icon: Mail, label: 'Email', value: companyProfile.contact.email, href: `mailto:${companyProfile.contact.email}` },
@@ -12,10 +51,29 @@ const contactInfo = [
   { icon: Target, label: 'Focus', value: 'CRT, projects, internships, workshops, hackathons, and placement guidance' },
 ];
 
+const teamMembers = [
+  {
+    name: 'Vanapalli Chandra Vamsi',
+    role: 'Director',
+    email: 'crestsow@gmail.com',
+    linkedin: '#',
+    twitter: '#',
+  },
+  {
+    name: 'Balusu Sai Swapna',
+    role: 'Director',
+    email: 'crestsow@gmail.com',
+    linkedin: '#',
+    twitter: '#',
+  },
+];
+
 export default function ContactPage() {
   const [formData, setFormData] = useState({ name: '', email: '', subject: '', message: '' });
   const [errors, setErrors] = useState({});
   const [submitted, setSubmitted] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState('');
 
   function validate() {
     const errs = {};
@@ -28,11 +86,27 @@ export default function ContactPage() {
     return errs;
   }
 
-  function handleSubmit(e) {
+  async function handleSubmit(e) {
     e.preventDefault();
     const errs = validate();
     setErrors(errs);
-    if (Object.keys(errs).length === 0) setSubmitted(true);
+    setSubmitError('');
+
+    if (Object.keys(errs).length === 0) {
+      setIsSubmitting(true);
+      try {
+        const result = await sendContactEmail(formData);
+        if (result.success) {
+          setSubmitted(true);
+        } else {
+          setSubmitError(result.message || 'Failed to send message.');
+        }
+      } catch (error) {
+        setSubmitError('An unexpected error occurred. Please try again.');
+      } finally {
+        setIsSubmitting(false);
+      }
+    }
   }
 
   return (
@@ -63,8 +137,7 @@ export default function ContactPage() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.85, delay: 0.2 }}
           >
-            Have a question about our programs, partnerships, or anything else?
-            We are here to help.
+            Companies, students, and faculties — reach out to us directly for programs, partnerships, internships, or any inquiries. We're here to help.
           </motion.p>
         </div>
         </div>
@@ -104,6 +177,67 @@ export default function ContactPage() {
               </Wrapper>
             );
           })}
+        </div>
+      </section>
+
+      {/* ── Team Contact Cards ── */}
+      <section className="px-4 py-12">
+        <div className="max-w-6xl mx-auto">
+          <motion.h2
+            className="text-2xl font-bold text-[#0A0A0A] mb-8 text-center"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+          >
+            Contact Our Team Directly
+          </motion.h2>
+          <div className="grid sm:grid-cols-2 gap-6 max-w-2xl mx-auto">
+            {teamMembers.map((member, i) => (
+              <motion.div
+                key={member.name}
+                initial={{ opacity: 0, y: 24 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.55, delay: i * 0.1, ease: [0.16, 1, 0.3, 1] }}
+                className="bg-white border border-[#E5E7EB] rounded-2xl p-6 shadow-sm hover:shadow-md transition-shadow"
+              >
+                <div className="flex items-center gap-4 mb-4">
+                  <div className="w-12 h-12 flex items-center justify-center rounded-full bg-[#F5F6F8]">
+                    <User size={20} className="text-[#0A0A0A]" />
+                  </div>
+                  <div>
+                    <p className="font-bold text-[#0A0A0A]">{member.name}</p>
+                    <p className="text-sm text-[#6B7280]">{member.role}</p>
+                  </div>
+                </div>
+                <div className="flex flex-wrap gap-2">
+                  <a
+                    href={`mailto:${member.email}`}
+                    className="inline-flex items-center gap-1.5 text-xs font-medium text-[#4B5563] bg-[#F5F6F8] border border-[#E5E7EB] px-3 py-1.5 rounded-full hover:bg-[#EAF1FF] transition-colors"
+                  >
+                    <Mail size={12} /> Email
+                  </a>
+                  <a
+                    href={member.linkedin}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-1.5 text-xs font-medium text-[#4B5563] bg-[#F5F6F8] border border-[#E5E7EB] px-3 py-1.5 rounded-full hover:bg-[#EAF1FF] transition-colors"
+                  >
+                    <Linkedin size={12} /> LinkedIn
+                  </a>
+                  <a
+                    href={member.twitter}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-1.5 text-xs font-medium text-[#4B5563] bg-[#F5F6F8] border border-[#E5E7EB] px-3 py-1.5 rounded-full hover:bg-[#EAF1FF] transition-colors"
+                  >
+                    <Twitter size={12} /> Twitter
+                  </a>
+                </div>
+              </motion.div>
+            ))}
+          </div>
         </div>
       </section>
 
@@ -187,9 +321,13 @@ export default function ContactPage() {
                   )}
                 </div>
 
-                <button type="submit" className="btn-primary w-full justify-between">
-                  <span>Send Message</span>
-                  <ArrowRight size={16} />
+                {submitError && (
+                  <p className="text-sm text-red-500 text-center font-medium bg-red-50 p-3 rounded-xl border border-red-100">{submitError}</p>
+                )}
+
+                <button type="submit" disabled={isSubmitting} className="btn-primary w-full justify-between disabled:opacity-70 disabled:cursor-not-allowed">
+                  <span>{isSubmitting ? 'Sending...' : 'Send Message'}</span>
+                  {!isSubmitting && <ArrowRight size={16} />}
                 </button>
               </motion.form>
             )}
