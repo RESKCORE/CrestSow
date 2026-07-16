@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
 import Link from 'next/link';
+import Image from 'next/image';
 import { Menu, X, Globe } from 'lucide-react';
 import { companyProfile } from '@/lib/data/company';
 
@@ -30,7 +31,7 @@ export default function Navbar() {
             href="/"
             className="flex items-center gap-2 pl-5 pr-3 text-white font-bold text-[15px]"
           >
-            CrestSow
+            <Image src="/logo.png" alt="CrestSow" width={36} height={36} className="h-9 w-9 rounded-full object-cover" priority />
           </Link>
 
           {/* Navigation Links (Middle) */}
