@@ -61,6 +61,7 @@ export default function Navbar() {
               onClick={() => setIsOpen(!isOpen)}
               className="md:hidden w-8 h-8 bg-[#2A2A2A] rounded-full flex items-center justify-center text-white ml-2"
               aria-label="Toggle menu"
+              aria-expanded={isOpen}
             >
               {isOpen ? <X size={18} /> : <Menu size={18} />}
             </button>
@@ -72,11 +73,15 @@ export default function Navbar() {
       {isOpen && (
         <div
           className="fixed inset-0 z-40 bg-[#EFEFF1]/95 backdrop-blur-xl flex flex-col items-center justify-center gap-10 md:hidden transition-colors duration-300"
+          role="dialog"
+          aria-modal="true"
+          aria-label="Navigation menu"
           onClick={() => setIsOpen(false)}
         >
           <button
             onClick={() => setIsOpen(false)}
             className="absolute top-6 right-6 text-[#0A0A0A] hover:opacity-70"
+            aria-label="Close menu"
           >
             <X size={24} />
           </button>

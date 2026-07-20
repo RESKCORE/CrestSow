@@ -26,7 +26,8 @@ export default function HeroSection() {
             loop
             playsInline
             poster="/hero-poster.jpg"
-            preload="auto"
+            preload="metadata"
+            aria-hidden="true"
             className="w-full h-full object-cover opacity-90"
           >
             <source src="/hero-student.webm" type="video/webm" />

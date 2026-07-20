@@ -85,7 +85,7 @@ export default function CoursesSection() {
             onClick={() => router.push('/programs')}
             className="btn-primary"
           >
-            Start for Free
+            Explore Programs
           </button>
         </div>
       </div>

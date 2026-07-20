@@ -56,24 +56,25 @@ const teamMembers = [
     name: 'Vanapalli Chandra Vamsi',
     role: 'Director',
     email: 'crestsow@gmail.com',
-    linkedin: '#',
-    twitter: '#',
+    linkedin: null,
+    twitter: null,
   },
   {
     name: 'Balusu Sai Swapna',
     role: 'Director',
     email: 'crestsow@gmail.com',
-    linkedin: '#',
-    twitter: '#',
+    linkedin: null,
+    twitter: null,
   },
 ];
 
-export default function ContactPage() {
+export default function ContactClient() {
   const [formData, setFormData] = useState({ name: '', email: '', subject: '', message: '' });
   const [errors, setErrors] = useState({});
   const [submitted, setSubmitted] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitError, setSubmitError] = useState('');
+  const [honeypot, setHoneypot] = useState('');
 
   function validate() {
     const errs = {};
@@ -95,7 +96,7 @@ export default function ContactPage() {
     if (Object.keys(errs).length === 0) {
       setIsSubmitting(true);
       try {
-        const result = await sendContactEmail(formData);
+        const result = await sendContactEmail(formData, honeypot);
         if (result.success) {
           setSubmitted(true);
         } else {
@@ -124,7 +125,7 @@ export default function ContactPage() {
               Inquiries
             </motion.p>
           <motion.h1
-            className="text-5xl sm:text-6xl md:text-7xl text-[#0A0A0A] tracking-tight leading-none mb-6"
+            className="text-4xl sm:text-5xl md:text-7xl text-[#0A0A0A] tracking-tight leading-none mb-6"
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.85, ease: [0.16, 1, 0.3, 1] }}
@@ -145,7 +146,7 @@ export default function ContactPage() {
 
       {/* ── Contact Info Grid ── */}
       <section className="px-4 py-16">
-        <div className="max-w-6xl mx-auto grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="max-w-6xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
           {contactInfo.map((info, i) => {
             const Icon = info.icon;
             const Wrapper = info.href ? motion.a : motion.div;
@@ -218,22 +219,40 @@ export default function ContactPage() {
                   >
                     <Mail size={12} /> Email
                   </a>
-                  <a
-                    href={member.linkedin}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center gap-1.5 text-xs font-medium text-[#4B5563] bg-[#F5F6F8] border border-[#E5E7EB] px-3 py-1.5 rounded-full hover:bg-[#EAF1FF] transition-colors"
-                  >
-                    <Linkedin size={12} /> LinkedIn
-                  </a>
-                  <a
-                    href={member.twitter}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center gap-1.5 text-xs font-medium text-[#4B5563] bg-[#F5F6F8] border border-[#E5E7EB] px-3 py-1.5 rounded-full hover:bg-[#EAF1FF] transition-colors"
-                  >
-                    <Twitter size={12} /> Twitter
-                  </a>
+                  {member.linkedin ? (
+                    <a
+                      href={member.linkedin}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-1.5 text-xs font-medium text-[#4B5563] bg-[#F5F6F8] border border-[#E5E7EB] px-3 py-1.5 rounded-full hover:bg-[#EAF1FF] transition-colors"
+                    >
+                      <Linkedin size={12} /> LinkedIn
+                    </a>
+                  ) : (
+                    <span
+                      aria-disabled="true"
+                      className="inline-flex items-center gap-1.5 text-xs font-medium text-[#9CA3AF] bg-[#F5F6F8] border border-[#E5E7EB] px-3 py-1.5 rounded-full opacity-50 cursor-not-allowed"
+                    >
+                      <Linkedin size={12} /> LinkedIn
+                    </span>
+                  )}
+                  {member.twitter ? (
+                    <a
+                      href={member.twitter}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-1.5 text-xs font-medium text-[#4B5563] bg-[#F5F6F8] border border-[#E5E7EB] px-3 py-1.5 rounded-full hover:bg-[#EAF1FF] transition-colors"
+                    >
+                      <Twitter size={12} /> Twitter
+                    </a>
+                  ) : (
+                    <span
+                      aria-disabled="true"
+                      className="inline-flex items-center gap-1.5 text-xs font-medium text-[#9CA3AF] bg-[#F5F6F8] border border-[#E5E7EB] px-3 py-1.5 rounded-full opacity-50 cursor-not-allowed"
+                    >
+                      <Twitter size={12} /> Twitter
+                    </span>
+                  )}
                 </div>
               </motion.div>
             ))}
@@ -275,54 +294,78 @@ export default function ContactPage() {
               >
                 <p className="font-bold text-xl text-[#0A0A0A] mb-6 tracking-tight">Send us a message</p>
 
+                {/* Honeypot — hidden from humans, visible to bots */}
+                <div aria-hidden="true" className="absolute -left-[9999px]" tabIndex={-1}>
+                  <label htmlFor="website">Leave this blank</label>
+                  <input
+                    id="website"
+                    name="website"
+                    type="text"
+                    value={honeypot}
+                    onChange={(e) => setHoneypot(e.target.value)}
+                    autoComplete="off"
+                    tabIndex={-1}
+                  />
+                </div>
+
                 <div className="grid sm:grid-cols-2 gap-6">
                   {[
                     { field: 'name', label: 'Full Name', type: 'text' },
                     { field: 'email', label: 'Email', type: 'email' },
                   ].map(({ field, label, type }) => (
                     <div key={field}>
-                      <label className="block text-sm font-medium text-[#4B5563] mb-2">{label}</label>
+                      <label htmlFor={field} className="block text-sm font-medium text-[#4B5563] mb-2">{label}</label>
                       <input
+                        id={field}
                         type={type}
                         value={formData[field]}
                         onChange={(e) => setFormData({ ...formData, [field]: e.target.value })}
+                        autoComplete={field === 'email' ? 'email' : 'name'}
+                        maxLength={field === 'name' ? 100 : undefined}
+                        aria-describedby={errors[field] ? `${field}-error` : undefined}
                         className="w-full px-4 py-2.5 rounded-xl border border-[#E5E7EB] bg-white text-[#0A0A0A] outline-none focus:border-[#0A0A0A] focus:ring-1 focus:ring-[#0A0A0A] transition-colors"
                       />
                       {errors[field] && (
-                        <p className="text-xs mt-1.5 text-red-500">{errors[field]}</p>
+                        <p id={`${field}-error`} className="text-xs mt-1.5 text-red-500">{errors[field]}</p>
                       )}
                     </div>
                   ))}
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-[#4B5563] mb-2">Subject</label>
+                  <label htmlFor="subject" className="block text-sm font-medium text-[#4B5563] mb-2">Subject</label>
                   <input
+                    id="subject"
                     type="text"
                     value={formData.subject}
                     onChange={(e) => setFormData({ ...formData, subject: e.target.value })}
+                    maxLength={200}
+                    aria-describedby={errors.subject ? 'subject-error' : undefined}
                     className="w-full px-4 py-2.5 rounded-xl border border-[#E5E7EB] bg-white text-[#0A0A0A] outline-none focus:border-[#0A0A0A] focus:ring-1 focus:ring-[#0A0A0A] transition-colors"
                   />
                   {errors.subject && (
-                    <p className="text-xs mt-1.5 text-red-500">{errors.subject}</p>
+                    <p id="subject-error" className="text-xs mt-1.5 text-red-500">{errors.subject}</p>
                   )}
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-[#4B5563] mb-2">Message</label>
+                  <label htmlFor="message" className="block text-sm font-medium text-[#4B5563] mb-2">Message</label>
                   <textarea
+                    id="message"
                     rows={5}
                     value={formData.message}
                     onChange={(e) => setFormData({ ...formData, message: e.target.value })}
+                    maxLength={2000}
+                    aria-describedby={errors.message ? 'message-error' : undefined}
                     className="w-full px-4 py-3 rounded-xl border border-[#E5E7EB] bg-white text-[#0A0A0A] outline-none focus:border-[#0A0A0A] focus:ring-1 focus:ring-[#0A0A0A] transition-colors resize-none"
                   />
                   {errors.message && (
-                    <p className="text-xs mt-1.5 text-red-500">{errors.message}</p>
+                    <p id="message-error" className="text-xs mt-1.5 text-red-500">{errors.message}</p>
                   )}
                 </div>
 
                 {submitError && (
-                  <p className="text-sm text-red-500 text-center font-medium bg-red-50 p-3 rounded-xl border border-red-100">{submitError}</p>
+                  <p role="alert" aria-live="polite" className="text-sm text-red-500 text-center font-medium bg-red-50 p-3 rounded-xl border border-red-100">{submitError}</p>
                 )}
 
                 <button type="submit" disabled={isSubmitting} className="btn-primary w-full justify-between disabled:opacity-70 disabled:cursor-not-allowed">

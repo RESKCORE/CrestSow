@@ -192,7 +192,7 @@ export default function AboutPage() {
 
           <div className="mt-20 max-w-5xl mx-auto">
             <PointerGlowCard className="bg-[#F5F6F8] border border-[#E5E7EB] rounded-[32px] p-2 md:p-4 overflow-hidden shadow-sm">
-              <img src="/course content.png" alt="Course Curriculum Structure" className="w-full h-auto rounded-[24px]" />
+              <Image src="/course content.png" alt="Course Curriculum Structure" width={1200} height={675} loading="lazy" className="w-full h-auto rounded-[24px]" />
             </PointerGlowCard>
           </div>
         </div>

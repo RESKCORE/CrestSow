@@ -115,16 +115,16 @@ function EmblaCarousel({ items }) {
         </div>
       </div>
 
-      <button onClick={scrollPrev} className="hidden sm:flex absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 w-12 h-12 rounded-full items-center justify-center z-10 bg-white border border-[#E5E7EB] shadow-sm hover:bg-[#F5F6F8] transition-colors text-[#0A0A0A]">
+      <button onClick={scrollPrev} aria-label="Previous" className="hidden sm:flex absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 w-12 h-12 rounded-full items-center justify-center z-10 bg-white border border-[#E5E7EB] shadow-sm hover:bg-[#F5F6F8] transition-colors text-[#0A0A0A]">
         <ChevronLeft size={20} />
       </button>
-      <button onClick={scrollNext} className="hidden sm:flex absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 w-12 h-12 rounded-full items-center justify-center z-10 bg-white border border-[#E5E7EB] shadow-sm hover:bg-[#F5F6F8] transition-colors text-[#0A0A0A]">
+      <button onClick={scrollNext} aria-label="Next" className="hidden sm:flex absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 w-12 h-12 rounded-full items-center justify-center z-10 bg-white border border-[#E5E7EB] shadow-sm hover:bg-[#F5F6F8] transition-colors text-[#0A0A0A]">
         <ChevronRight size={20} />
       </button>
 
       <div className="flex justify-center gap-2 mt-8">
         {items.map((_, i) => (
-          <button key={i} onClick={() => emblaApi?.scrollTo(i)} className="rounded-full transition-all duration-300" style={{ width: i === selectedIndex ? 24 : 8, height: 8, background: i === selectedIndex ? '#0A0A0A' : '#D1D5DB' }} />
+          <button key={i} onClick={() => emblaApi?.scrollTo(i)} aria-label={`Go to slide ${i + 1}`} className="rounded-full transition-all duration-300" style={{ width: i === selectedIndex ? 24 : 8, height: 8, background: i === selectedIndex ? '#0A0A0A' : '#D1D5DB' }} />
         ))}
       </div>
     </div>
