@@ -21,6 +21,8 @@ const milestones = [
   { year: '2022', event: 'Internship program launched with 30 partner companies.' },
   { year: '2023', event: '5,000+ students trained. Expanded to 50+ countries.' },
   { year: '2024', event: '12,000+ alumni. 150+ corporate partners. 96% placement rate.' },
+  { year: '2025', event: 'Launched AI & Emerging Tech tracks. Crossed 15,000+ students trained.' },
+  { year: '2026', event: 'Expanding enterprise partnerships and launching advanced CRT programs.' },
 ];
 
 const directorColors = ['#4C7FFF', '#10B981'];
@@ -143,7 +145,7 @@ export default function AboutPage() {
                   <h3 className="font-serif text-2xl text-[#0A0A0A] mb-3">
                     {v.title}
                   </h3>
-                  <p className="text-[#6B7280] leading-relaxed">{v.description}</p>
+                  <p className="text-[#4B5563] leading-relaxed">{v.description}</p>
                 </PointerGlowCard>
               </motion.div>
             ))}

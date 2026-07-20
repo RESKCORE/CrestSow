@@ -1,5 +1,7 @@
 import './globals.css';
+import Script from 'next/script';
 import Navbar from '@/components/layout/Navbar';
+import Footer from '@/components/layout/Footer';
 import CustomCursor from '@/components/ui/CustomCursor';
 
 const siteUrl = 'https://crestsow-rho.vercel.app';
@@ -18,6 +20,7 @@ export const metadata = {
       'CrestSow provides CRT, projects, internships, workshops, hackathons, placement guidance, resume building, and programs in trending tech and career skills.',
     url: siteUrl,
     siteName: 'CrestSow',
+    images: [{ url: '/og-image.png', width: 1200, height: 630, alt: 'CrestSow' }],
     type: 'website',
   },
   twitter: {
@@ -25,6 +28,7 @@ export const metadata = {
     title: 'CrestSow - CRT, Projects, Internships & Training',
     description:
       'CrestSow provides CRT, projects, internships, workshops, hackathons, placement guidance, resume building, and programs in trending tech and career skills.',
+    images: ['/og-image.png'],
   },
   robots: {
     index: true,
@@ -47,6 +51,29 @@ export default function RootLayout({ children }) {
         />
       </head>
       <body className="font-sans antialiased min-h-screen bg-[#EFEFF1] text-[#0A0A0A] p-2 md:p-4 lg:p-6 transition-colors duration-300">
+        <Script
+          id="organization-schema"
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              '@context': 'https://schema.org',
+              '@type': 'Organization',
+              name: 'CrestSow',
+              url: siteUrl,
+              logo: `${siteUrl}/logo.png`,
+              description: 'CrestSow provides CRT, projects, internships, workshops, hackathons, placement guidance, resume building, and programs in trending tech and career skills.',
+              contactPoint: {
+                '@type': 'ContactPoint',
+                telephone: '+918143024204',
+                contactType: 'customer service',
+                email: 'crestsow@gmail.com',
+              },
+              sameAs: [
+                'https://www.instagram.com/crestsow/',
+              ],
+            }),
+          }}
+        />
         <a
           href="#main-content"
           className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[100] focus:bg-[#0A0A0A] focus:text-white focus:px-4 focus:py-2 focus:rounded-full focus:text-sm focus:font-semibold"
@@ -57,6 +84,7 @@ export default function RootLayout({ children }) {
         <div className="relative min-h-[calc(100vh-1rem)] md:min-h-[calc(100vh-2rem)] lg:min-h-[calc(100vh-3rem)] bg-white rounded-3xl md:rounded-[32px] overflow-hidden shadow-sm border border-[#E5E7EB] flex flex-col">
           <Navbar />
           <main id="main-content" className="flex-1 relative z-10">{children}</main>
+          <Footer />
         </div>
       </body>
     </html>

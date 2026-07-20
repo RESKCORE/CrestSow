@@ -33,7 +33,7 @@ const testimonials = [
   },
   {
     id: 5,
-    quote: "I went from zero coding knowledge to shipping a React app in production. CrewSow's project-based approach is unmatched.",
+    quote: "I went from zero coding knowledge to shipping a React app in production. CrestSow's project-based approach is unmatched.",
     name: 'Fatima Al-Rashid',
     role: 'Software Developer, TCS',
     initials: 'FA',
@@ -58,7 +58,7 @@ export default function TestimonialsPage() {
         <div className="relative z-10 max-w-6xl mx-auto text-center">
           <motion.p
             className="text-[10px] sm:text-xs uppercase tracking-[0.25em] mb-5"
-            style={{ color: 'var(--muted-foreground)' }}
+            style={{ color: '#4B5563' }}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.7 }}
@@ -74,7 +74,7 @@ export default function TestimonialsPage() {
           >
             What our students
             <br />
-            <span className="font-serif italic" style={{ color: 'var(--muted-foreground)' }}>
+            <span className="font-serif italic" style={{ color: '#4B5563' }}>
               say.
             </span>
           </motion.h1>
@@ -104,7 +104,7 @@ export default function TestimonialsPage() {
                 {/* Quote */}
                 <p
                   className="text-sm leading-relaxed font-serif italic flex-1"
-                  style={{ color: 'var(--muted-foreground)' }}
+                  style={{ color: '#4B5563' }}
                 >
                   &ldquo;{t.quote}&rdquo;
                 </p>
@@ -123,7 +123,7 @@ export default function TestimonialsPage() {
                   </div>
                   <div>
                     <p className="text-sm font-medium" style={{ color: 'var(--foreground)' }}>{t.name}</p>
-                    <p className="text-xs" style={{ color: 'var(--muted-foreground)' }}>{t.role}</p>
+                    <p className="text-xs" style={{ color: '#4B5563' }}>{t.role}</p>
                   </div>
                 </div>
               </motion.div>

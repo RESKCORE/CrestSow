@@ -295,7 +295,7 @@ export default function ContactClient() {
                 <p className="font-bold text-xl text-[#0A0A0A] mb-6 tracking-tight">Send us a message</p>
 
                 {/* Honeypot — hidden from humans, visible to bots */}
-                <div aria-hidden="true" className="absolute -left-[9999px]" tabIndex={-1}>
+                <div aria-hidden="true" className="sr-only" tabIndex={-1}>
                   <label htmlFor="website">Leave this blank</label>
                   <input
                     id="website"

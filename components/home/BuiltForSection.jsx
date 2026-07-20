@@ -25,7 +25,7 @@ export default function BuiltForSection() {
           <h2 className="text-4xl md:text-5xl tracking-tight mb-6 leading-tight">
             Built for modern <span className="font-serif italic text-[#4C7FFF]">ambition.</span>
           </h2>
-          <p className="text-[#6B7280] text-base mb-8">
+          <p className="text-[#4B5563] text-base mb-8">
             Our pipeline is engineered to take you from foundational concepts to advanced, industry-ready skills, ensuring you stand out to top employers.
           </p>
 
